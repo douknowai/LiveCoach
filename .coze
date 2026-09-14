@@ -1,0 +1,10 @@
+[project]
+requires = ["nodejs-24"]
+
+[dev]  # 开发环境
+build = ["pnpm", "install"]
+run = ["sh", "-c", "PORT=${DEPLOY_RUN_PORT} pnpm tsx watch src/server.ts"]
+
+[deploy]  # 部署环境
+build = ["pnpm", "run", "build"]
+run = ["pnpm", "run", "start"]
