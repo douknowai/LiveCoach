@@ -60,6 +60,27 @@ const GAZE_OFF = 0.4;
 /** 微笑 blendshape 均值阈值 */
 const SMILE_SCORE = 0.45;
 
+/**
+ * TFLite 首次推理时会向 stderr 打印 `INFO: Created TensorFlow Lite XNNPACK delegate for CPU.`
+ * 这类良性初始化日志；emscripten 将 stderr 映射为 console.error，
+ * 导致 Next.js Dev Overlay 把它误报为 Console Error（实为委托创建成功的正常信息）。
+ * 此处做定向过滤：仅吞掉 TFLite 的 INFO 级日志，其余 console.error 全部原样透传。
+ */
+let tfliteLogFilterInstalled = false;
+
+function installTfliteInfoLogFilter(): void {
+  if (tfliteLogFilterInstalled) return;
+  tfliteLogFilterInstalled = true;
+  const originalConsoleError = console.error.bind(console);
+  console.error = (...args: unknown[]) => {
+    const isBenignTfliteInfo = args.some(
+      (arg) => typeof arg === 'string' && arg.includes('INFO:') && arg.includes('TensorFlow Lite'),
+    );
+    if (isBenignTfliteInfo) return;
+    originalConsoleError(...args);
+  };
+}
+
 interface HoldTrack {
   /** 条件连续满足的起始时间（null=未满足） */
   since: number | null;
@@ -122,6 +143,7 @@ export class FaceEngine {
    */
   async init(video: HTMLVideoElement): Promise<boolean> {
     if (this.landmarker) return true;
+    installTfliteInfoLogFilter();
     this.video = video;
     this.state.engine = 'loading';
     this.emitState(true);
