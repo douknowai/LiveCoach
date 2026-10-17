@@ -131,3 +131,5 @@ __pycache__/
 .mypy_cache/
 .ruff_cache/
 *.egg-info/
+.cozeproj/reduction
+.codegraph
