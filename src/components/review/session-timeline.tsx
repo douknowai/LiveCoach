@@ -10,7 +10,7 @@ import { TYPE_META } from '@/components/live/reminder-feed';
  * 点击提醒点展开该时刻详情（消息 / 来源 / 此刻评分），把后台分析翻译成可回放的故事线
  */
 
-const STAGE_COLORS = ['rgba(196,131,138,0.10)', 'rgba(176,138,184,0.10)', 'rgba(138,180,212,0.09)', 'rgba(212,165,116,0.10)'];
+const STAGE_COLORS = ['rgba(166,106,58,0.10)', 'rgba(176,138,184,0.10)', 'rgba(138,180,212,0.09)', 'rgba(212,165,116,0.10)'];
 
 const PRIORITY_ROW: Record<number, number> = { 1: 0, 2: 1, 3: 2 };
 
@@ -84,21 +84,21 @@ export function SessionTimeline({
   const hasAny = reminders.length > 0 || stageSegs.length > 0 || curve !== null;
 
   return (
-    <section className="rounded-2xl border border-[#e8e0dc] bg-white p-5 shadow-[0_2px_16px_rgba(44,36,34,0.06)] sm:p-6">
+    <section className="rounded-2xl border border-[#e6dfd2] bg-white p-5 shadow-[0_2px_16px_rgba(44,36,34,0.06)] sm:p-6">
       <div className="flex flex-wrap items-center gap-2">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="h-[17px] w-[17px] text-[#c4838a]" aria-hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="h-[17px] w-[17px] text-[#a66a3a]" aria-hidden>
           <circle cx="12" cy="12" r="9" />
           <path d="M12 7v5l3.2 2" />
         </svg>
         <h3 className="font-serif text-[15px] font-bold text-[#2c2422]">直播时间轴</h3>
-        <span className="rounded-full bg-[#f2e0e2] px-2 py-0.5 text-[11px] font-medium text-[#9d5f68]">
+        <span className="rounded-full bg-[#f3e7d5] px-2 py-0.5 text-[11px] font-medium text-[#7a5230]">
           {reminders.length} 条提醒 · {stageSegs.length} 个环节
         </span>
-        <span className="ml-auto text-[11px] text-[#a69791]">点击提醒点查看该时刻详情</span>
+        <span className="ml-auto text-[11px] text-[#9c8e80]">点击提醒点查看该时刻详情</span>
       </div>
 
       {!hasAny ? (
-        <p className="mt-6 text-center text-[13px] text-[#a69791]">本场记录暂无时间轴数据</p>
+        <p className="mt-6 text-center text-[13px] text-[#9c8e80]">本场记录暂无时间轴数据</p>
       ) : (
         <div className="mt-4">
           {/* 环节色带 */}
@@ -120,38 +120,38 @@ export function SessionTimeline({
               <svg viewBox="0 0 1000 64" preserveAspectRatio="none" className="h-full w-full" aria-hidden>
                 <defs>
                   <linearGradient id="tl-fill" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#c4838a" stopOpacity="0.16" />
-                    <stop offset="100%" stopColor="#c4838a" stopOpacity="0.02" />
+                    <stop offset="0%" stopColor="#a66a3a" stopOpacity="0.16" />
+                    <stop offset="100%" stopColor="#a66a3a" stopOpacity="0.02" />
                   </linearGradient>
                 </defs>
                 {[55, 75, 90].map((v) => {
                   const y = 64 - ((v - 35) / 65) * 60;
                   return (
-                    <line key={v} x1="0" y1={y} x2="1000" y2={y} stroke="#e8e0dc" strokeWidth="1" strokeDasharray="4 6" vectorEffect="non-scaling-stroke" />
+                    <line key={v} x1="0" y1={y} x2="1000" y2={y} stroke="#e6dfd2" strokeWidth="1" strokeDasharray="4 6" vectorEffect="non-scaling-stroke" />
                   );
                 })}
                 <polyline points={`0,64 ${curve.pts} ${(curve.last.atSec / duration) * 1000},64`} fill="url(#tl-fill)" stroke="none" />
-                <polyline points={curve.pts} fill="none" stroke="#c4838a" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+                <polyline points={curve.pts} fill="none" stroke="#a66a3a" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
               </svg>
             ) : (
-              <div className="flex h-full items-center justify-center rounded-md border border-dashed border-[#f0eae6] text-[11px] text-[#a69791]">
+              <div className="flex h-full items-center justify-center rounded-md border border-dashed border-[#f1ebdf] text-[11px] text-[#9c8e80]">
                 本场无评分采样（旧版记录仅展示提醒时间轴）
               </div>
             )}
             {curve && (
-              <span className="absolute right-0 top-0 font-mono text-[10px] text-[#a69791]">
+              <span className="absolute right-0 top-0 font-mono text-[10px] text-[#9c8e80]">
                 综合评分 {curve.last.overall}
               </span>
             )}
           </div>
 
           {/* 提醒泳道：priority 1-3 分三行 */}
-          <div className="relative mt-2 h-[42px] rounded-md bg-[#faf7f5]">
+          <div className="relative mt-2 h-[42px] rounded-md bg-[#faf7f0]">
             {[0, 1, 2].map((row) => (
-              <div key={row} className="absolute inset-x-0 h-px bg-[#f0eae6]" style={{ top: 14 * (row + 1) }} />
+              <div key={row} className="absolute inset-x-0 h-px bg-[#f1ebdf]" style={{ top: 14 * (row + 1) }} />
             ))}
             {reminders.map((r, i) => {
-              const meta = TYPE_META[r.type] ?? { color: '#c4838a', label: '提醒' };
+              const meta = TYPE_META[r.type] ?? { color: '#a66a3a', label: '提醒' };
               const row = PRIORITY_ROW[r.priority ?? 2] ?? 1;
               const active = selected === r;
               return (
@@ -183,7 +183,7 @@ export function SessionTimeline({
             {ticks.map((t, i) => (
               <span
                 key={i}
-                className="absolute -translate-x-1/2 font-mono text-[10px] text-[#a69791]"
+                className="absolute -translate-x-1/2 font-mono text-[10px] text-[#9c8e80]"
                 style={{ left: `${(t / duration) * 100}%` }}
               >
                 {fmt(t)}
@@ -194,26 +194,26 @@ export function SessionTimeline({
           {/* 选中提醒详情 */}
           {selected && (
             <div
-              className="mt-3 rounded-lg rounded-l-none border border-y-[#e8e0dc] border-r-[#e8e0dc] p-3.5"
+              className="mt-3 rounded-lg rounded-l-none border border-y-[#e6dfd2] border-r-[#e6dfd2] p-3.5"
               style={{
-                borderLeft: `3px solid ${(TYPE_META[selected.type] ?? { color: '#c4838a' }).color}`,
-                background: 'rgba(196,131,138,0.045)',
+                borderLeft: `3px solid ${(TYPE_META[selected.type] ?? { color: '#a66a3a' }).color}`,
+                background: 'rgba(166,106,58,0.045)',
               }}
             >
               <div className="flex flex-wrap items-center gap-2">
                 <span
                   className="text-[11px] font-semibold"
-                  style={{ color: (TYPE_META[selected.type] ?? { color: '#c4838a' }).color }}
+                  style={{ color: (TYPE_META[selected.type] ?? { color: '#a66a3a' }).color }}
                 >
                   {(TYPE_META[selected.type] ?? { label: '提醒' }).label}
                 </span>
-                <span className="rounded-full bg-[#f0eae6] px-1.5 py-0.5 text-[10px] text-[#8f847f]">
+                <span className="rounded-full bg-[#f1ebdf] px-1.5 py-0.5 text-[10px] text-[#8f847f]">
                   {selected.source === 'face' ? '端侧·即时' : selected.source === 'vision' ? 'AI·视觉' : selected.source === 'speech' ? 'AI·语音' : '本地规则'}
                 </span>
                 {selected.priority === 1 && (
-                  <span className="rounded-full bg-[#f9eded] px-1.5 py-0.5 text-[10px] font-semibold text-[#c47a7a]">重要</span>
+                  <span className="rounded-full bg-[#f7efe2] px-1.5 py-0.5 text-[10px] font-semibold text-[#b56a3a]">重要</span>
                 )}
-                <span className="ml-auto flex items-center gap-2 font-mono text-[10px] text-[#a69791]">
+                <span className="ml-auto flex items-center gap-2 font-mono text-[10px] text-[#9c8e80]">
                   {scoreAt(selected.atSec) !== null && <span>此刻评分 {scoreAt(selected.atSec)}</span>}
                   <span>{fmt(selected.atSec)}</span>
                 </span>

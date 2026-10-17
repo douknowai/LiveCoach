@@ -24,7 +24,7 @@ interface SessionListItem {
 }
 
 function scoreColor(v: number): string {
-  return v >= 80 ? '#8ab89a' : v >= 60 ? '#d4a574' : '#c47a7a';
+  return v >= 80 ? '#8ab89a' : v >= 60 ? '#d4a574' : '#b56a3a';
 }
 
 function ScoreBadge({ score }: { score: number | null }) {
@@ -60,14 +60,14 @@ function StepCard({
 }) {
   return (
     <div
-      className="fade-up rounded-2xl border border-[#e8e0dc] bg-white p-5 shadow-[0_1px_3px_rgba(44,36,34,0.04)] transition-shadow hover:shadow-[0_4px_20px_rgba(44,36,34,0.06)]"
+      className="fade-up rounded-2xl border border-[#e6dfd2] bg-white p-5 shadow-[0_1px_3px_rgba(44,36,34,0.04)] transition-shadow hover:shadow-[0_4px_20px_rgba(44,36,34,0.06)]"
       style={{ animationDelay: `${delay}s` }}
     >
       <div className="flex items-center justify-between">
-        <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#f2e0e2]">
-          <Icon className="h-4.5 w-4.5 text-[#c4838a]" strokeWidth={1.6} />
+        <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#f3e7d5]">
+          <Icon className="h-4.5 w-4.5 text-[#a66a3a]" strokeWidth={1.6} />
         </span>
-        <span className="font-mono text-xs font-bold tracking-wider text-[#c4838a]">
+        <span className="font-mono text-xs font-bold tracking-wider text-[#a66a3a]">
           {step}
         </span>
       </div>
@@ -105,21 +105,21 @@ export default function HomePage() {
             width: 240,
             height: 240,
             background:
-              'radial-gradient(circle, rgba(196,131,138,0.12) 0%, transparent 70%)',
+              'radial-gradient(circle, rgba(166,106,58,0.12) 0%, transparent 70%)',
           }}
         />
         <div className="fade-up relative mx-auto max-w-2xl">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#e8c4c8] bg-[#f2e0e2] px-3.5 py-1.5 text-xs font-medium tracking-[0.3px] text-[#9d5f68]">
-            <span className="live-dot h-1.5 w-1.5 rounded-full bg-[#c47a7a]" />
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#e3c4a3] bg-[#f3e7d5] px-3.5 py-1.5 text-xs font-medium tracking-[0.3px] text-[#7a5230]">
+            <span className="live-dot h-1.5 w-1.5 rounded-full bg-[#b56a3a]" />
             面向职业教育 · 高校直播实训场景
           </div>
           <h1 className="font-serif text-[28px] font-bold leading-[1.3] tracking-[2px] text-[#2c2422] sm:text-[34px]">
-            <span className="text-[#c4838a]">直播</span>实训 AI 陪练
+            <span className="text-[#a66a3a]">直播</span>实训 AI 陪练
           </h1>
-          <p className="mt-2.5 text-[11px] font-light tracking-[5px] text-[#a69791]">
+          <p className="mt-2.5 text-[11px] font-light tracking-[5px] text-[#9c8e80]">
             LIVE PRACTICE · AI COACH
           </p>
-          <p className="mx-auto mt-5 max-w-[500px] text-[13px] leading-[1.7] tracking-[0.3px] text-[#a69791]">
+          <p className="mx-auto mt-5 max-w-[500px] text-[13px] leading-[1.7] tracking-[0.3px] text-[#9c8e80]">
             AI 教练实时观察你的镜头表现、表情姿态、语言表达与直播流程：
             离镜头太近、忘词冷场、遗漏环节，都会像耳返一样轻声提醒。
             直播结束，立即获得复盘报告与成长记录。
@@ -127,14 +127,14 @@ export default function HomePage() {
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap">
             <Link
               href="/setup"
-              className="pulse-ring group inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#c4838a] px-8 py-3.5 text-[14px] font-medium tracking-[0.3px] text-white transition-all hover:bg-[#b8727a] hover:shadow-[0_4px_20px_rgba(196,131,138,0.35)] sm:w-auto"
+              className="pulse-ring group inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#a66a3a] px-8 py-3.5 text-[14px] font-medium tracking-[0.3px] text-white transition-all hover:bg-[#8f5630] hover:shadow-[0_4px_20px_rgba(166,106,58,0.35)] sm:w-auto"
             >
               开始模拟直播训练
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </Link>
             <Link
               href="/history"
-              className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-[#e8e0dc] bg-white px-7 py-3.5 text-[14px] text-[#6e625e] transition-all hover:border-[#a69791] hover:text-[#2c2422] sm:w-auto"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-[#e6dfd2] bg-white px-7 py-3.5 text-[14px] text-[#6e625e] transition-all hover:border-[#9c8e80] hover:text-[#2c2422] sm:w-auto"
             >
               查看成长记录
             </Link>
@@ -176,7 +176,7 @@ export default function HomePage() {
             <h2 className="font-serif text-xl font-bold tracking-[1px] text-[#2c2422]">
               选择一个直播训练任务
             </h2>
-            <p className="mt-1.5 text-[13px] text-[#a69791]">
+            <p className="mt-1.5 text-[13px] text-[#9c8e80]">
               选择任务后进入直播准备页，填写越完整 AI 陪练越有针对性
             </p>
           </div>
@@ -186,22 +186,22 @@ export default function HomePage() {
             <Link
               key={t.id}
               href={`/setup?task=${t.id}`}
-              className="fade-up group relative overflow-hidden rounded-2xl border border-[#e8e0dc] bg-white p-5 transition-all hover:-translate-y-1 hover:border-[#e8c4c8] hover:shadow-[0_8px_28px_rgba(196,131,138,0.14)]"
+              className="fade-up group relative overflow-hidden rounded-2xl border border-[#e6dfd2] bg-white p-5 transition-all hover:-translate-y-1 hover:border-[#e3c4a3] hover:shadow-[0_8px_28px_rgba(166,106,58,0.14)]"
               style={{ animationDelay: `${0.05 * i}s` }}
             >
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#f2e0e2] transition-colors group-hover:bg-[#e8c4c8]">
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#f3e7d5] transition-colors group-hover:bg-[#e3c4a3]">
                 <TaskIcon
                   taskId={t.id}
-                  className="h-5 w-5 text-[#c4838a]"
+                  className="h-5 w-5 text-[#a66a3a]"
                 />
               </span>
               <h3 className="mt-3.5 font-serif text-[15px] font-bold tracking-[0.5px] text-[#2c2422]">
                 {t.name}
               </h3>
-              <p className="mt-1 text-[12.5px] leading-relaxed text-[#a69791]">
+              <p className="mt-1 text-[12.5px] leading-relaxed text-[#9c8e80]">
                 {t.desc}
               </p>
-              <span className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-[#c4838a] opacity-0 transition-opacity group-hover:opacity-100">
+              <span className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-[#a66a3a] opacity-0 transition-opacity group-hover:opacity-100">
                 进入准备 <ArrowRight className="h-3 w-3" />
               </span>
             </Link>
@@ -216,23 +216,23 @@ export default function HomePage() {
             <h2 className="font-serif text-xl font-bold tracking-[1px] text-[#2c2422]">
               最近训练
             </h2>
-            <p className="mt-1.5 text-[13px] text-[#a69791]">
+            <p className="mt-1.5 text-[13px] text-[#9c8e80]">
               训练—反馈—复盘—再训练，每一场都被记录
             </p>
           </div>
           {recent.length > 0 && (
             <Link
               href="/history"
-              className="inline-flex items-center gap-1 text-[13px] text-[#c4838a] transition-colors hover:text-[#b8727a]"
+              className="inline-flex items-center gap-1 text-[13px] text-[#a66a3a] transition-colors hover:text-[#8f5630]"
             >
               全部记录 <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           )}
         </div>
         {loaded && recent.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-[#e8e0dc] bg-white/50 p-12 text-center">
+          <div className="rounded-2xl border border-dashed border-[#e6dfd2] bg-white/50 p-12 text-center">
             <FileText className="mx-auto h-8 w-8 text-[#d8cdc6]" strokeWidth={1.4} />
-            <p className="mt-3 text-[13.5px] text-[#a69791]">
+            <p className="mt-3 text-[13.5px] text-[#9c8e80]">
               还没有训练记录，选择上方任务开始第一场模拟直播吧
             </p>
           </div>
@@ -242,14 +242,14 @@ export default function HomePage() {
               <Link
                 key={s.id}
                 href={`/review/${s.id}`}
-                className="group flex items-center gap-4 rounded-2xl border border-[#e8e0dc] bg-white p-4 transition-all hover:border-[#e8c4c8] hover:shadow-[0_4px_20px_rgba(44,36,34,0.06)]"
+                className="group flex items-center gap-4 rounded-2xl border border-[#e6dfd2] bg-white p-4 transition-all hover:border-[#e3c4a3] hover:shadow-[0_4px_20px_rgba(44,36,34,0.06)]"
               >
                 <ScoreBadge score={s.overall_score} />
                 <div className="min-w-0 flex-1">
                   <p className="truncate font-serif text-[14.5px] font-bold tracking-[0.3px] text-[#2c2422]">
                     {s.topic || '自由模拟直播'}
                   </p>
-                  <p className="mt-1 flex items-center gap-1.5 text-xs text-[#a69791]">
+                  <p className="mt-1 flex items-center gap-1.5 text-xs text-[#9c8e80]">
                     <TaskIcon taskId={s.task_type} className="h-3.5 w-3.5" />
                     {new Date(s.created_at).toLocaleString('zh-CN', {
                       month: 'numeric',
@@ -261,7 +261,7 @@ export default function HomePage() {
                     {Math.floor(s.duration_sec / 60)} 分钟
                   </p>
                 </div>
-                <span className="hidden shrink-0 items-center gap-1 text-xs text-[#c4838a] opacity-70 transition-opacity group-hover:opacity-100 sm:inline-flex">
+                <span className="hidden shrink-0 items-center gap-1 text-xs text-[#a66a3a] opacity-70 transition-opacity group-hover:opacity-100 sm:inline-flex">
                   复盘 <ArrowRight className="h-3 w-3" />
                 </span>
               </Link>
@@ -270,7 +270,7 @@ export default function HomePage() {
         )}
       </section>
 
-      <footer className="border-t border-[#e8e0dc] bg-white/60 px-4 py-8 text-center text-xs leading-relaxed text-[#a69791]">
+      <footer className="border-t border-[#e6dfd2] bg-white/60 px-4 py-8 text-center text-xs leading-relaxed text-[#9c8e80]">
         LiveCoach · AI 辅助模拟直播演练与实时主播陪练系统
         <span className="mx-2">·</span>
         分析仅针对直播表现与训练相关的外在表现

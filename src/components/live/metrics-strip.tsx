@@ -5,12 +5,12 @@ import type { MetricsSnapshot } from '@/lib/metrics-engine';
 
 /** 参考稿 sub-score-item：标签 + 细条 + 等宽数字，多色渐变 */
 const BAR_COLORS: Record<MetricKey, string> = {
-  cameraPresence: 'linear-gradient(90deg, #e8c4c8, #c4838a)',
+  cameraPresence: 'linear-gradient(90deg, #e3c4a3, #a66a3a)',
   expression: 'linear-gradient(90deg, #c5d8ea, #8ab4d4)',
   posture: 'linear-gradient(90deg, #cfe2cb, #a8c69f)',
   language: 'linear-gradient(90deg, #ecd3b2, #d4a574)',
   pacing: 'linear-gradient(90deg, #ddd0ec, #b8a4d4)',
-  content: 'linear-gradient(90deg, #f0caca, #e8a8a8)',
+  content: 'linear-gradient(90deg, #efc9a6, #e0a478)',
   interaction: 'linear-gradient(90deg, #c8e0d2, #8ab89a)',
   charisma: 'linear-gradient(90deg, #ecdec2, #d4b48c)',
 };
@@ -22,18 +22,18 @@ export function MetricsStrip({ snap }: { snap: MetricsSnapshot }) {
       {METRIC_KEYS.map((k, i) => {
         const v = Math.round(snap.metrics[k]);
         const color =
-          v >= 85 ? '#8ab89a' : v >= 70 ? '#c4838a' : v >= 55 ? '#d4a574' : '#c4bab3';
+          v >= 85 ? '#8ab89a' : v >= 70 ? '#a66a3a' : v >= 55 ? '#d4a574' : '#c0b4a4';
         return (
           <div
             key={k}
             className={`flex items-center py-2 ${
-              i < METRIC_KEYS.length - 1 ? 'border-b border-[#f5efec]' : ''
+              i < METRIC_KEYS.length - 1 ? 'border-b border-[#f5f0e6]' : ''
             }`}
           >
             <span className="w-[68px] shrink-0 text-[12.5px] text-[#6e625e]">
               {METRIC_LABELS[k]}
             </span>
-            <span className="mx-3 h-[5px] flex-1 overflow-hidden rounded-full bg-[#f0eae7]">
+            <span className="mx-3 h-[5px] flex-1 overflow-hidden rounded-full bg-[#f1ebe0]">
               <span
                 className="block h-full rounded-full"
                 style={{

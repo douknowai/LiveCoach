@@ -24,26 +24,26 @@ function isFailedSummary(s: unknown): boolean {
 
 function gradeOf(score: number): { label: string; color: string } {
   if (score >= 85) return { label: '优秀', color: '#8ab89a' };
-  if (score >= 70) return { label: '良好', color: '#c4838a' };
+  if (score >= 70) return { label: '良好', color: '#a66a3a' };
   if (score >= 55) return { label: '合格', color: '#d4a574' };
-  return { label: '继续加油', color: '#c4bab3' };
+  return { label: '继续加油', color: '#c0b4a4' };
 }
 
 /** 参考稿 vp-stat：白卡大数字统计 */
 function StatPill({ label, value }: { label: string; value: string | number }) {
   return (
-    <div className="rounded-2xl border border-[#e8e0dc] bg-white px-3 py-3.5 text-center shadow-[0_1px_3px_rgba(44,36,34,0.04)] sm:px-4">
+    <div className="rounded-2xl border border-[#e6dfd2] bg-white px-3 py-3.5 text-center shadow-[0_1px_3px_rgba(44,36,34,0.04)] sm:px-4">
       <p className="text-lg font-bold tabular-nums text-[#2c2422] sm:text-xl">{value}</p>
-      <p className="mt-0.5 text-[11px] text-[#a69791]">{label}</p>
+      <p className="mt-0.5 text-[11px] text-[#9c8e80]">{label}</p>
     </div>
   );
 }
 
 function CardHead({ title, hint }: { title: string; hint?: string }) {
   return (
-    <div className="mb-4 flex items-center justify-between border-b border-[#f0eae6] pb-3">
+    <div className="mb-4 flex items-center justify-between border-b border-[#f1ebdf] pb-3">
       <h2 className="font-serif text-[15px] font-bold tracking-[0.5px] text-[#2c2422]">{title}</h2>
-      {hint && <span className="text-[11px] text-[#a69791]">{hint}</span>}
+      {hint && <span className="text-[11px] text-[#9c8e80]">{hint}</span>}
     </div>
   );
 }
@@ -231,7 +231,7 @@ export default function ReviewPage() {
   if (status === 'loading') {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <span className="spinner h-8 w-8 rounded-full border-2 border-[#c4838a] border-t-transparent" />
+        <span className="spinner h-8 w-8 rounded-full border-2 border-[#a66a3a] border-t-transparent" />
       </div>
     );
   }
@@ -242,7 +242,7 @@ export default function ReviewPage() {
         <p className="font-serif text-lg font-bold text-[#2c2422]">未找到该训练记录</p>
         <Link
           href="/history"
-          className="rounded-full bg-[#c4838a] px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#b8727a]"
+          className="rounded-full bg-[#a66a3a] px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#8f5630]"
         >
           返回训练记录
         </Link>
@@ -262,12 +262,12 @@ export default function ReviewPage() {
       <SiteHeader />
       <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
         {/* 头部：评分环 + 标题 + 等级 */}
-        <div className="fade-up mb-6 flex flex-col gap-5 rounded-2xl border border-[#e8e0dc] bg-white p-5 shadow-[0_2px_16px_rgba(44,36,34,0.06)] sm:p-6 lg:flex-row lg:items-center">
+        <div className="fade-up mb-6 flex flex-col gap-5 rounded-2xl border border-[#e6dfd2] bg-white p-5 shadow-[0_2px_16px_rgba(44,36,34,0.06)] sm:p-6 lg:flex-row lg:items-center">
           <div className="flex items-center gap-5">
             <ScoreRing value={score} size={108} />
             <div>
-              <div className="flex flex-wrap items-center gap-2 text-xs text-[#a69791]">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-[#f2e0e2] px-2.5 py-1 font-medium text-[#9d5f68]">
+              <div className="flex flex-wrap items-center gap-2 text-xs text-[#9c8e80]">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-[#f3e7d5] px-2.5 py-1 font-medium text-[#7a5230]">
                   <TaskIcon taskId={record.task_type} className="h-3.5 w-3.5" />
                   {task?.name ?? '自由模拟直播'}
                 </span>
@@ -294,13 +294,13 @@ export default function ReviewPage() {
           <div className="flex flex-1 flex-wrap items-center justify-start gap-3 lg:justify-end">
             <Link
               href={`/setup?task=${record.task_type}`}
-              className="w-full rounded-full bg-[#c4838a] px-6 py-3 text-center text-sm font-medium text-white shadow-[0_4px_16px_rgba(196,131,138,0.35)] transition-all hover:-translate-y-0.5 hover:bg-[#b8727a] sm:w-auto"
+              className="w-full rounded-full bg-[#a66a3a] px-6 py-3 text-center text-sm font-medium text-white shadow-[0_4px_16px_rgba(166,106,58,0.35)] transition-all hover:-translate-y-0.5 hover:bg-[#8f5630] sm:w-auto"
             >
               再练一场
             </Link>
             <Link
               href="/history"
-              className="w-full rounded-full border border-[#e8e0dc] bg-white px-6 py-3 text-center text-sm font-medium text-[#6e625e] transition-colors hover:border-[#c4bab3] sm:w-auto"
+              className="w-full rounded-full border border-[#e6dfd2] bg-white px-6 py-3 text-center text-sm font-medium text-[#6e625e] transition-colors hover:border-[#c0b4a4] sm:w-auto"
             >
               全部记录
             </Link>
@@ -327,7 +327,7 @@ export default function ReviewPage() {
         <div className="grid gap-5 lg:grid-cols-[1fr_400px]">
           {/* 左：AI 总结 */}
           <div className="space-y-5">
-            <div className="fade-up rounded-2xl border border-[#e8e0dc] bg-white p-5 shadow-[0_2px_16px_rgba(44,36,34,0.06)] sm:p-6">
+            <div className="fade-up rounded-2xl border border-[#e6dfd2] bg-white p-5 shadow-[0_2px_16px_rgba(44,36,34,0.06)] sm:p-6">
               <CardHead title="AI 训练总结" hint={summary ? '由 AI 教练生成本场复盘' : undefined} />
               {summary ? (
                 <div className="space-y-5">
@@ -350,16 +350,16 @@ export default function ReviewPage() {
                     </ul>
                   </div>
                   <div>
-                    <h3 className="mb-2 flex items-center gap-1.5 text-[13px] font-bold text-[#b56a6a]">
-                      <span className="flex h-4 w-4 items-center justify-center rounded-full bg-[#f2dede] text-[10px]">!</span>
+                    <h3 className="mb-2 flex items-center gap-1.5 text-[13px] font-bold text-[#a05e30]">
+                      <span className="flex h-4 w-4 items-center justify-center rounded-full bg-[#f7e8d8] text-[10px]">!</span>
                       最需要改进的问题
                     </h3>
                     <ul className="space-y-1.5">
                       {summary.weaknesses.map((s, i: number) => (
                         <li
                           key={i}
-                          className="rounded-lg rounded-l-none border border-y-[#f5ecec] border-r-[#f5ecec] bg-[#faf3f3] px-3.5 py-2 text-[13.5px] text-[#4a423e]"
-                          style={{ borderLeft: '3px solid #c47a7a' }}
+                          className="rounded-lg rounded-l-none border border-y-[#f4ebdc] border-r-[#f4ebdc] bg-[#f8f2e7] px-3.5 py-2 text-[13.5px] text-[#4a423e]"
+                          style={{ borderLeft: '3px solid #b56a3a' }}
                         >
                           {s}
                         </li>
@@ -382,8 +382,8 @@ export default function ReviewPage() {
                   </div>
                 </div>
               ) : generating === 'generating' ? (
-                <div className="mt-4 flex items-center gap-3 rounded-xl border border-[#e8e0dc] bg-[#faf6f4] px-4 py-4 text-sm text-[#6e625e]">
-                  <span className="spinner h-4 w-4 shrink-0 rounded-full border-2 border-[#c4838a] border-t-transparent" />
+                <div className="mt-4 flex items-center gap-3 rounded-xl border border-[#e6dfd2] bg-[#faf7f1] px-4 py-4 text-sm text-[#6e625e]">
+                  <span className="spinner h-4 w-4 shrink-0 rounded-full border-2 border-[#a66a3a] border-t-transparent" />
                   AI 教练正在回看本场直播数据，生成训练总结...
                 </div>
               ) : generating === 'failed' ? (
@@ -391,19 +391,19 @@ export default function ReviewPage() {
                   复盘生成遇到问题
                   <button
                     onClick={() => record && void generateReview(record.id)}
-                    className="rounded-full bg-[#c4838a] px-3.5 py-1.5 text-xs font-medium text-white transition-colors hover:bg-[#b8727a]"
+                    className="rounded-full bg-[#a66a3a] px-3.5 py-1.5 text-xs font-medium text-white transition-colors hover:bg-[#8f5630]"
                   >
                     重新生成
                   </button>
                 </div>
               ) : (
-                <p className="mt-4 text-sm text-[#a69791]">暂无复盘内容，但数据已保留。</p>
+                <p className="mt-4 text-sm text-[#9c8e80]">暂无复盘内容，但数据已保留。</p>
               )}
             </div>
 
             {/* 各维度点评：参考稿 report-table 行式布局 */}
             {summary && (
-              <div className="fade-up rounded-2xl border border-[#e8e0dc] bg-white p-5 shadow-[0_2px_16px_rgba(44,36,34,0.06)] sm:p-6">
+              <div className="fade-up rounded-2xl border border-[#e6dfd2] bg-white p-5 shadow-[0_2px_16px_rgba(44,36,34,0.06)] sm:p-6">
                 <CardHead title="分维度点评" />
                 <div>
                   {[
@@ -415,11 +415,11 @@ export default function ReviewPage() {
                     <div
                       key={d.label}
                       className={`flex flex-col gap-1.5 py-3.5 ${
-                        i < 3 ? 'border-b border-[#f5efec]' : ''
+                        i < 3 ? 'border-b border-[#f5f0e6]' : ''
                       }`}
                     >
                       <span className="flex items-center gap-2 text-[13px] font-semibold text-[#2c2422]">
-                        <span className="h-1.5 w-1.5 rounded-full bg-[#c4838a]" />
+                        <span className="h-1.5 w-1.5 rounded-full bg-[#a66a3a]" />
                         {d.label}
                       </span>
                       <p className="pl-3.5 text-[13px] leading-relaxed text-[#6e625e]">{d.text}</p>
@@ -431,7 +431,7 @@ export default function ReviewPage() {
 
             {/* 环节时间线 */}
             {stageList.length > 0 && (
-              <div className="fade-up rounded-2xl border border-[#e8e0dc] bg-white p-5 shadow-[0_2px_16px_rgba(44,36,34,0.06)] sm:p-6">
+              <div className="fade-up rounded-2xl border border-[#e6dfd2] bg-white p-5 shadow-[0_2px_16px_rgba(44,36,34,0.06)] sm:p-6">
                 <CardHead title="直播流程完成情况" />
                 <div className="flex flex-wrap gap-2">
                   {stageList.map((s) => {
@@ -456,7 +456,7 @@ export default function ReviewPage() {
                     );
                   })}
                 </div>
-                <p className="mt-3 text-xs text-[#a69791]">
+                <p className="mt-3 text-xs text-[#9c8e80]">
                   绿色为已进入的环节，黄色为本次直播未覆盖的环节。
                 </p>
               </div>
@@ -465,7 +465,7 @@ export default function ReviewPage() {
 
           {/* 右：雷达图 + 提醒统计 */}
           <div className="space-y-5">
-            <div className="fade-up rounded-2xl border border-[#e8e0dc] bg-white p-5 shadow-[0_2px_16px_rgba(44,36,34,0.06)]">
+            <div className="fade-up rounded-2xl border border-[#e6dfd2] bg-white p-5 shadow-[0_2px_16px_rgba(44,36,34,0.06)]">
               <CardHead title="能力雷达图" hint={prev ? '虚线为上一次训练' : undefined} />
               <ScoreRadar
                 metrics={record.metrics ?? ZERO_METRICS}
@@ -473,19 +473,19 @@ export default function ReviewPage() {
               />
             </div>
 
-            <div className="fade-up rounded-2xl border border-[#e8e0dc] bg-white p-5 shadow-[0_2px_16px_rgba(44,36,34,0.06)]">
+            <div className="fade-up rounded-2xl border border-[#e6dfd2] bg-white p-5 shadow-[0_2px_16px_rgba(44,36,34,0.06)]">
               <CardHead title="成长档案" hint="AI 教练自动维护，下次陪练生效" />
               {growth ? (
                 <div className="space-y-3.5">
-                  <div className="flex items-center gap-2.5 rounded-xl bg-gradient-to-r from-[#faf3f3] to-white p-3">
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#f2e0e2]">
-                      <BookUser className="h-4 w-4 text-[#c4838a]" strokeWidth={1.6} />
+                  <div className="flex items-center gap-2.5 rounded-xl bg-gradient-to-r from-[#f8f2e7] to-white p-3">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#f3e7d5]">
+                      <BookUser className="h-4 w-4 text-[#a66a3a]" strokeWidth={1.6} />
                     </span>
                     <div>
                       <p className="text-[13px] font-bold text-[#2c2422]">
                         已陪练 {growth.sessions} 场
                       </p>
-                      <p className="text-[11px] text-[#a69791]">
+                      <p className="text-[11px] text-[#9c8e80]">
                         {coachLabel} · {profile?.learner.background || '未填写背景'}
                       </p>
                     </div>
@@ -495,7 +495,7 @@ export default function ReviewPage() {
                     <div className="space-y-2">
                       {growth.improvedMetrics.length > 0 && (
                         <div className="flex flex-wrap items-center gap-1.5">
-                          <span className="text-[11px] text-[#a69791]">正在进步</span>
+                          <span className="text-[11px] text-[#9c8e80]">正在进步</span>
                           {growth.improvedMetrics.map((k) => (
                             <span key={k} className="rounded-full bg-[#eef5ea] px-2 py-0.5 text-[11px] font-medium text-[#6e9a7e]">
                               {METRIC_LABELS[k]}
@@ -505,7 +505,7 @@ export default function ReviewPage() {
                       )}
                       {growth.weakMetrics.length > 0 && (
                         <div className="flex flex-wrap items-center gap-1.5">
-                          <span className="text-[11px] text-[#a69791]">待突破</span>
+                          <span className="text-[11px] text-[#9c8e80]">待突破</span>
                           {growth.weakMetrics.map((k) => (
                             <span key={k} className="rounded-full bg-[#faf5ec] px-2 py-0.5 text-[11px] font-medium text-[#b8874e]">
                               {METRIC_LABELS[k]}
@@ -518,13 +518,13 @@ export default function ReviewPage() {
 
                   {growth.lastOveralls.length > 1 && (
                     <div>
-                      <p className="mb-1.5 text-[11px] text-[#a69791]">最近总分走势（左旧右新）</p>
+                      <p className="mb-1.5 text-[11px] text-[#9c8e80]">最近总分走势（左旧右新）</p>
                       <div className="flex items-end gap-1.5">
                         {growth.lastOveralls.slice().reverse().map((v, i) => (
                           <div key={i} className="flex flex-1 flex-col items-center gap-1">
                             <span className="font-mono text-[11px] font-bold tabular-nums text-[#6e625e]">{v}</span>
                             <div
-                              className="w-full rounded-t-md bg-gradient-to-t from-[#f2e0e2] to-[#e8c4c8]"
+                              className="w-full rounded-t-md bg-gradient-to-t from-[#f3e7d5] to-[#e3c4a3]"
                               style={{ height: `${Math.max(((v ?? 0) / 100) * 36, 4)}px` }}
                             />
                           </div>
@@ -533,21 +533,21 @@ export default function ReviewPage() {
                     </div>
                   )}
 
-                  <p className="rounded-xl border border-[#f0eae6] bg-[#faf6f4] p-3 text-[12.5px] leading-relaxed text-[#6e625e]">
+                  <p className="rounded-xl border border-[#f1ebdf] bg-[#faf7f1] p-3 text-[12.5px] leading-relaxed text-[#6e625e]">
                     {growth.note || '档案将随训练自动积累，AI 教练据此调整陪练重点。'}
                   </p>
                 </div>
               ) : (
-                <p className="text-sm text-[#a69791]">
+                <p className="text-sm text-[#9c8e80]">
                   本场是档案记录的第一场训练。复盘完成后，AI 将自动提炼弱项与进步点，作为下次陪练的起点。
                 </p>
               )}
             </div>
 
-            <div className="fade-up rounded-2xl border border-[#e8e0dc] bg-white p-5 shadow-[0_2px_16px_rgba(44,36,34,0.06)]">
+            <div className="fade-up rounded-2xl border border-[#e6dfd2] bg-white p-5 shadow-[0_2px_16px_rgba(44,36,34,0.06)]">
               <CardHead title="本场 AI 提醒统计" />
               {reminderAgg.length === 0 ? (
-                <p className="text-sm text-[#a69791]">本场直播 AI 未触发提醒，状态整体稳定。</p>
+                <p className="text-sm text-[#9c8e80]">本场直播 AI 未触发提醒，状态整体稳定。</p>
               ) : (
                 <div className="space-y-2.5">
                   {reminderAgg.map(([msg, count], i) => {
@@ -558,18 +558,18 @@ export default function ReviewPage() {
                           <span className="truncate text-[#4a423e]">{msg}</span>
                           <span
                             className={`shrink-0 rounded-full px-2 py-0.5 font-mono text-xs font-bold tabular-nums ${
-                              hot ? 'bg-[#f9eded] text-[#c47a7a]' : 'bg-[#f0ebe7] text-[#6e625e]'
+                              hot ? 'bg-[#f7efe2] text-[#b56a3a]' : 'bg-[#f0ebe7] text-[#6e625e]'
                             }`}
                           >
                             ×{count}
                           </span>
                         </div>
-                        <div className="mt-1 h-1 overflow-hidden rounded-full bg-[#f0eae7]">
+                        <div className="mt-1 h-1 overflow-hidden rounded-full bg-[#f1ebe0]">
                           <div
                             className="h-full rounded-full"
                             style={{
                               width: `${Math.min((count / Math.max(reminderAgg[0][1], 1)) * 100, 100)}%`,
-                              background: hot ? '#c47a7a' : '#e8c4c8',
+                              background: hot ? '#b56a3a' : '#e3c4a3',
                             }}
                           />
                         </div>
@@ -578,7 +578,7 @@ export default function ReviewPage() {
                   })}
                 </div>
               )}
-              <p className="mt-4 border-t border-[#f0eae6] pt-3 text-xs leading-relaxed text-[#a69791]">
+              <p className="mt-4 border-t border-[#f1ebdf] pt-3 text-xs leading-relaxed text-[#9c8e80]">
                 提示：同一问题出现 3 次以上，建议在下次训练时列为重点改进目标。
               </p>
             </div>

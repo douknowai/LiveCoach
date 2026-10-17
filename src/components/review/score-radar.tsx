@@ -36,15 +36,15 @@ export function ScoreRadar({
           <PolarAngleAxis dataKey="subject" tick={{ fill: '#6e625e', fontSize: 12 }} />
           <PolarRadiusAxis
             domain={[0, 100]}
-            tick={{ fill: '#c4bab3', fontSize: 9 }}
+            tick={{ fill: '#c0b4a4', fontSize: 9 }}
             axisLine={false}
           />
           {compare && (
             <Radar
               name="上次"
               dataKey="prev"
-              stroke="#c4bab3"
-              fill="#c4bab3"
+              stroke="#c0b4a4"
+              fill="#c0b4a4"
               fillOpacity={0.18}
               strokeDasharray="4 4"
             />
@@ -52,15 +52,15 @@ export function ScoreRadar({
           <Radar
             name="本次"
             dataKey="value"
-            stroke="#c4838a"
-            fill="#c4838a"
+            stroke="#a66a3a"
+            fill="#a66a3a"
             fillOpacity={0.28}
             strokeWidth={2}
           />
           <Tooltip
             contentStyle={{
               background: '#ffffff',
-              border: '1px solid #e8e0dc',
+              border: '1px solid #e6dfd2',
               borderRadius: 12,
               fontSize: 12,
               boxShadow: '0 8px 24px rgba(44,36,34,0.10)',

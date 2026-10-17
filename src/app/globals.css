@@ -64,50 +64,50 @@
 :root {
   --radius: 0.75rem;
   /* 暖白练播室主题（参照参考稿迁移） */
-  --background: #f8f4f1;
+  --background: #faf6ef;
   --foreground: #2c2422;
   --card: #ffffff;
   --card-foreground: #2c2422;
   --popover: #ffffff;
   --popover-foreground: #2c2422;
-  --primary: #c4838a;
+  --primary: #a66a3a;
   --primary-foreground: #ffffff;
   --secondary: #f0ebe7;
   --secondary-foreground: #2c2422;
   --muted: #f0ebe7;
-  --muted-foreground: #a69791;
-  --accent: #f2e0e2;
-  --accent-foreground: #9d5f68;
-  --destructive: #c47a7a;
-  --border: #e8e0dc;
-  --input: #e8e0dc;
-  --ring: rgba(196, 131, 138, 0.45);
-  --chart-1: #c4838a;
+  --muted-foreground: #9c8e80;
+  --accent: #f3e7d5;
+  --accent-foreground: #7a5230;
+  --destructive: #b56a3a;
+  --border: #e6dfd2;
+  --input: #e6dfd2;
+  --ring: rgba(166, 106, 58, 0.45);
+  --chart-1: #a66a3a;
   --chart-2: #8ab89a;
   --chart-3: #d4a574;
   --chart-4: #b88ab8;
   --chart-5: #8ab4d4;
   --sidebar: #ffffff;
   --sidebar-foreground: #2c2422;
-  --sidebar-primary: #c4838a;
+  --sidebar-primary: #a66a3a;
   --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: #f0ebe7;
   --sidebar-accent-foreground: #2c2422;
-  --sidebar-border: #e8e0dc;
-  --sidebar-ring: rgba(196, 131, 138, 0.45);
+  --sidebar-border: #e6dfd2;
+  --sidebar-ring: rgba(166, 106, 58, 0.45);
   /* 品牌语义色 */
-  --live: #c47a7a;
+  --live: #b56a3a;
   --ok: #8ab89a;
   --warn: #d4a574;
   --scope: #8ab4d4;
   --panel: #ffffff;
   --panel-2: #f0ebe7;
   /* 品牌主色族 */
-  --brand: #c4838a;
-  --brand-deep: #b8727a;
-  --brand-light: #e8c4c8;
-  --brand-lighter: #f2e0e2;
-  --brand-glow: rgba(196, 131, 138, 0.12);
+  --brand: #a66a3a;
+  --brand-deep: #8f5630;
+  --brand-light: #e3c4a3;
+  --brand-lighter: #f3e7d5;
+  --brand-glow: rgba(166, 106, 58, 0.12);
 }
 
 @layer base {
@@ -131,7 +131,7 @@
     z-index: 0;
   }
   ::selection {
-    background: rgba(196, 131, 138, 0.28);
+    background: rgba(166, 106, 58, 0.28);
   }
   /* 移动端触控体验：去掉点击高亮 */
   html {
@@ -171,11 +171,11 @@
   0%,
   100% {
     opacity: 1;
-    box-shadow: 0 0 0 0 rgba(196, 122, 122, 0.5);
+    box-shadow: 0 0 0 0 rgba(181, 106, 58, 0.5);
   }
   50% {
     opacity: 0.6;
-    box-shadow: 0 0 0 6px rgba(196, 122, 122, 0);
+    box-shadow: 0 0 0 6px rgba(181, 106, 58, 0);
   }
 }
 .live-glow {
@@ -252,7 +252,7 @@
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  border: 2px solid rgba(196, 131, 138, 0.6);
+  border: 2px solid rgba(166, 106, 58, 0.6);
   animation: pulse-ring-anim 1.6s ease-out infinite;
 }
 
@@ -302,7 +302,7 @@
 /* 暖色光晕背景（Hero 用） */
 .studio-bg {
   background:
-    radial-gradient(ellipse 46% 34% at 50% -4%, rgba(196, 131, 138, 0.1), transparent 68%),
+    radial-gradient(ellipse 46% 34% at 50% -4%, rgba(166, 106, 58, 0.1), transparent 68%),
     radial-gradient(ellipse 36% 26% at 88% 6%, rgba(138, 180, 212, 0.08), transparent 62%),
     var(--background);
 }

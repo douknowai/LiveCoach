@@ -30,7 +30,7 @@ function buildChips(s: FaceState): Chip[] {
 
   // 注视
   if (!s.faceFound) {
-    chips.push({ key: 'gaze', text: '离开画面', color: '#c47a7a', warn: true });
+    chips.push({ key: 'gaze', text: '离开画面', color: '#b56a3a', warn: true });
   } else if (s.gazeOnCamera < 0.4) {
     chips.push({ key: 'gaze', text: '视线偏离', color: '#d4a574', warn: true });
   } else {
@@ -39,11 +39,11 @@ function buildChips(s: FaceState): Chip[] {
 
   // 表情
   if (s.smile > 0.45) {
-    chips.push({ key: 'smile', text: '微笑中', color: '#c4838a' });
+    chips.push({ key: 'smile', text: '微笑中', color: '#a66a3a' });
   } else if (s.smile >= 0.15) {
-    chips.push({ key: 'smile', text: '表情自然', color: '#a69791' });
+    chips.push({ key: 'smile', text: '表情自然', color: '#9c8e80' });
   } else {
-    chips.push({ key: 'smile', text: '表情平淡', color: '#a69791' });
+    chips.push({ key: 'smile', text: '表情平淡', color: '#9c8e80' });
   }
 
   return chips;
@@ -55,8 +55,8 @@ export function FaceStatusChips({ faceState }: { faceState: FaceState }) {
 
   if (faceState.engine === 'loading') {
     return (
-      <span className="hidden items-center gap-1.5 text-[#a69791] lg:flex">
-        <span className="spinner h-2.5 w-2.5 rounded-full border-[1.5px] border-[#c4838a] border-t-transparent" />
+      <span className="hidden items-center gap-1.5 text-[#9c8e80] lg:flex">
+        <span className="spinner h-2.5 w-2.5 rounded-full border-[1.5px] border-[#a66a3a] border-t-transparent" />
         <span className="text-[11px]">端侧视觉启动中</span>
       </span>
     );
@@ -64,7 +64,7 @@ export function FaceStatusChips({ faceState }: { faceState: FaceState }) {
 
   if (!faceState.calibrated) {
     return (
-      <span className="hidden items-center gap-1.5 text-[#a69791] lg:flex">
+      <span className="hidden items-center gap-1.5 text-[#9c8e80] lg:flex">
         <span className="h-1.5 w-1.5 rounded-full bg-[#d4a574] pulse-dot" />
         <span className="text-[11px]">姿态基线校准中</span>
       </span>

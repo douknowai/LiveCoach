@@ -6,7 +6,7 @@ import type { CoachNote } from '@/hooks/use-live-session';
 
 /** 参考稿 feedback-item：左边框色条 + 浅底类型标签（无 emoji，柔和色系） */
 const TYPE_META: Record<string, { color: string; label: string }> = {
-  smile: { color: '#c4838a', label: '表情' },
+  smile: { color: '#a66a3a', label: '表情' },
   distance: { color: '#8ab4d4', label: '镜头' },
   head: { color: '#8ab4d4', label: '头部' },
   posture: { color: '#8ab4d4', label: '姿态' },
@@ -15,11 +15,11 @@ const TYPE_META: Record<string, { color: string; label: string }> = {
   energy: { color: '#d4a574', label: '状态' },
   volume: { color: '#d4a574', label: '音量' },
   pace: { color: '#d4a574', label: '语速' },
-  pause: { color: '#c47a7a', label: '冷场' },
+  pause: { color: '#b56a3a', label: '冷场' },
   filler: { color: '#d4a574', label: '口头禅' },
   interaction: { color: '#b8a4d4', label: '互动' },
   stage: { color: '#8ab4d4', label: '流程' },
-  content: { color: '#c47a7a', label: '内容' },
+  content: { color: '#b56a3a', label: '内容' },
   praise: { color: '#8ab89a', label: '鼓励' },
 };
 
@@ -29,9 +29,9 @@ function fmt(sec: number): string {
 
 /** 提醒来源徽标：端侧即时（本地零延迟）/ AI 视觉 / AI 语音；本地音频规则不标记避免噪音 */
 const SOURCE_META: Record<string, { text: string; className: string }> = {
-  face: { text: '端侧·即时', className: 'bg-[#f2e0e2] text-[#9d5f68]' },
-  vision: { text: 'AI·视觉', className: 'bg-[#f0eae6] text-[#8f847f]' },
-  speech: { text: 'AI·语音', className: 'bg-[#f0eae6] text-[#8f847f]' },
+  face: { text: '端侧·即时', className: 'bg-[#f3e7d5] text-[#7a5230]' },
+  vision: { text: 'AI·视觉', className: 'bg-[#f1ebdf] text-[#8f847f]' },
+  speech: { text: 'AI·语音', className: 'bg-[#f1ebdf] text-[#8f847f]' },
 };
 
 export { TYPE_META };
@@ -59,25 +59,25 @@ export function ReminderFeed({
     <div className="thin-scroll h-full space-y-2 overflow-y-auto pr-1">
       {welcomeText != null && (
         <div
-          className="reminder-enter rounded-lg rounded-l-none border border-y-[#e8e0dc] border-r-[#e8e0dc] p-3"
-          style={{ borderLeft: '3px solid #c4838a', background: 'rgba(196,131,138,0.08)' }}
+          className="reminder-enter rounded-lg rounded-l-none border border-y-[#e6dfd2] border-r-[#e6dfd2] p-3"
+          style={{ borderLeft: '3px solid #a66a3a', background: 'rgba(166,106,58,0.08)' }}
         >
           <div className="flex items-center gap-2">
-            <Sparkles className="h-3.5 w-3.5 text-[#c4838a]" strokeWidth={1.8} />
-            <span className="text-[11px] font-semibold text-[#9d5f68]">教练 · 个性化陪练</span>
+            <Sparkles className="h-3.5 w-3.5 text-[#a66a3a]" strokeWidth={1.8} />
+            <span className="text-[11px] font-semibold text-[#7a5230]">教练 · 个性化陪练</span>
           </div>
           <p className="mt-1.5 text-[13px] leading-relaxed text-[#4a423e]">
             {welcomeText}
             {welcomeText.length > 0 && (
-              <span className="welcome-caret ml-0.5 inline-block h-[14px] w-[2px] translate-y-[2px] bg-[#c4838a]" />
+              <span className="welcome-caret ml-0.5 inline-block h-[14px] w-[2px] translate-y-[2px] bg-[#a66a3a]" />
             )}
           </p>
         </div>
       )}
       {rows.length === 0 && (
-        <div className="rounded-xl border border-dashed border-[#e8e0dc] bg-[#faf6f4] p-5 text-center">
+        <div className="rounded-xl border border-dashed border-[#e6dfd2] bg-[#faf7f1] p-5 text-center">
           <p className="text-[13px] text-[#6e625e]">AI 教练正在观察中</p>
-          <p className="mt-1 text-xs text-[#a69791]">
+          <p className="mt-1 text-xs text-[#9c8e80]">
             出现明显问题时会在这里提醒你，状态正常时不会打扰
           </p>
         </div>
@@ -88,27 +88,27 @@ export function ReminderFeed({
           return (
             <div
               key={`note-${n.atSec}-${i}`}
-              className="reminder-enter rounded-lg rounded-l-none border border-y-[#e8e0dc] border-r-[#e8e0dc] p-3"
+              className="reminder-enter rounded-lg rounded-l-none border border-y-[#e6dfd2] border-r-[#e6dfd2] p-3"
               style={{ borderLeft: '3px solid #8ab4d4', background: 'rgba(138,180,212,0.07)' }}
             >
               <div className="flex items-center gap-2">
                 <span className="text-[11px] font-semibold text-[#7a9cb8]">环节点评</span>
-                <span className="ml-auto font-mono text-[10px] text-[#a69791]">{fmt(n.atSec)}</span>
+                <span className="ml-auto font-mono text-[10px] text-[#9c8e80]">{fmt(n.atSec)}</span>
               </div>
               <p className="mt-1.5 text-[13px] leading-relaxed text-[#4a423e]">{n.message}</p>
             </div>
           );
         }
         const r = row.r;
-        const meta = TYPE_META[r.type] ?? { color: '#c4838a', label: '提醒' };
+        const meta = TYPE_META[r.type] ?? { color: '#a66a3a', label: '提醒' };
         const isPraise = r.type === 'praise';
         return (
           <div
             key={`${r.atSec}-${i}`}
-            className="reminder-enter rounded-lg rounded-l-none border border-y-[#e8e0dc] border-r-[#e8e0dc] p-3"
+            className="reminder-enter rounded-lg rounded-l-none border border-y-[#e6dfd2] border-r-[#e6dfd2] p-3"
             style={{
               borderLeft: `3px solid ${meta.color}`,
-              background: isPraise ? 'rgba(138,184,154,0.08)' : 'rgba(196,131,138,0.045)',
+              background: isPraise ? 'rgba(138,184,154,0.08)' : 'rgba(166,106,58,0.045)',
             }}
           >
             <div className="flex items-center gap-2">
@@ -119,7 +119,7 @@ export function ReminderFeed({
                 {meta.label}
               </span>
               {r.priority === 1 && (
-                <span className="rounded-full bg-[#f9eded] px-1.5 py-0.5 text-[10px] font-semibold text-[#c47a7a]">
+                <span className="rounded-full bg-[#f7efe2] px-1.5 py-0.5 text-[10px] font-semibold text-[#b56a3a]">
                   重要
                 </span>
               )}
@@ -130,7 +130,7 @@ export function ReminderFeed({
                   {SOURCE_META[r.source].text}
                 </span>
               )}
-              <span className="ml-auto font-mono text-[10px] text-[#a69791]">{fmt(r.atSec)}</span>
+              <span className="ml-auto font-mono text-[10px] text-[#9c8e80]">{fmt(r.atSec)}</span>
             </div>
             <p className="mt-1.5 text-[13px] font-medium leading-relaxed text-[#3a322e]">
               {r.message}

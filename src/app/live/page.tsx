@@ -74,9 +74,9 @@ function CardHead({
   badge?: React.ReactNode;
 }) {
   return (
-    <div className="flex shrink-0 items-center justify-between border-b border-[#f0eae6] px-4 py-3">
+    <div className="flex shrink-0 items-center justify-between border-b border-[#f1ebdf] px-4 py-3">
       <h3 className="flex items-center gap-2 font-serif text-[14px] font-bold tracking-[0.5px] text-[#2c2422]">
-        <Icon className="h-4 w-4 text-[#c4838a]" />
+        <Icon className="h-4 w-4 text-[#a66a3a]" />
         {title}
       </h3>
       {badge}
@@ -142,23 +142,23 @@ function LiveRoom({ config }: { config: TrainingConfig }) {
 
   const statusInfo =
     aiStatus === 'idle'
-      ? { text: 'AI 待命', dot: 'bg-[#c4bab3]' }
+      ? { text: 'AI 待命', dot: 'bg-[#c0b4a4]' }
       : aiStatus === 'watching'
-        ? { text: 'AI 观察画面', dot: 'bg-[#c4838a] pulse-dot' }
+        ? { text: 'AI 观察画面', dot: 'bg-[#a66a3a] pulse-dot' }
         : { text: 'AI 聆听语音', dot: 'bg-[#8ab4d4] pulse-dot' };
 
   return (
     <div className="flex min-h-dvh flex-col">
       {/* 顶栏：参考稿 navbar 风格 */}
-      <header className="sticky top-0 z-30 border-b border-[#e8e0dc] bg-white/85 backdrop-blur-md">
+      <header className="sticky top-0 z-30 border-b border-[#e6dfd2] bg-white/85 backdrop-blur-md">
         <div className="mx-auto flex max-w-[1440px] items-center gap-2 px-3 py-2.5 sm:gap-3 sm:px-5">
           {isLive || isSaving || isCountdown ? (
-            <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[#c47a7a] px-2.5 py-1 text-[11px] font-bold tracking-[1px] text-white">
+            <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[#b56a3a] px-2.5 py-1 text-[11px] font-bold tracking-[1px] text-white">
               <span className="live-dot h-1.5 w-1.5 rounded-full bg-white" />
               LIVE
             </span>
           ) : (
-            <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[#e8e0dc] bg-white px-2.5 py-1 text-[11px] font-bold text-[#a69791]">
+            <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[#e6dfd2] bg-white px-2.5 py-1 text-[11px] font-bold text-[#9c8e80]">
               准备中
             </span>
           )}
@@ -166,7 +166,7 @@ function LiveRoom({ config }: { config: TrainingConfig }) {
             <p className="truncate font-serif text-[15px] font-bold text-[#2c2422]">
               {config.topic || '自由模拟直播'}
             </p>
-            <p className="hidden truncate text-[11px] text-[#a69791] sm:block">
+            <p className="hidden truncate text-[11px] text-[#9c8e80] sm:block">
               LiveCoach · {task?.name ?? '自由任务'}
               {config.studentName ? ` · ${config.studentName}` : ''}
             </p>
@@ -175,8 +175,8 @@ function LiveRoom({ config }: { config: TrainingConfig }) {
           <span
             className={`hidden items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] sm:inline-flex ${
               aiStatus === 'idle'
-                ? 'bg-[#f0ebe7] text-[#a69791]'
-                : 'bg-[#f2e0e2] text-[#9d5f68]'
+                ? 'bg-[#f0ebe7] text-[#9c8e80]'
+                : 'bg-[#f3e7d5] text-[#7a5230]'
             }`}
           >
             <span className={`h-1.5 w-1.5 rounded-full ${statusInfo.dot}`} />
@@ -186,13 +186,13 @@ function LiveRoom({ config }: { config: TrainingConfig }) {
             </span>
           </span>
           {/* 时间码 */}
-          <span className="rounded-full border border-[#e8e0dc] bg-white px-3 py-1 font-mono text-sm font-bold tabular-nums text-[#c4838a]">
+          <span className="rounded-full border border-[#e6dfd2] bg-white px-3 py-1 font-mono text-sm font-bold tabular-nums text-[#a66a3a]">
             {fmtClock(elapsedSec)}
           </span>
           {/* 音量电平 */}
-          <div className="hidden h-1.5 w-16 overflow-hidden rounded-full bg-[#f0eae7] sm:block">
+          <div className="hidden h-1.5 w-16 overflow-hidden rounded-full bg-[#f1ebe0] sm:block">
             <div
-              className="h-full rounded-full bg-gradient-to-r from-[#8ab89a] to-[#c4838a] transition-[width] duration-100"
+              className="h-full rounded-full bg-gradient-to-r from-[#8ab89a] to-[#a66a3a] transition-[width] duration-100"
               style={{ width: `${Math.min(audioState.level * 160, 100)}%` }}
             />
           </div>
@@ -202,7 +202,7 @@ function LiveRoom({ config }: { config: TrainingConfig }) {
                 if (isLive && window.confirm('确定结束本次模拟直播并生成复盘吗？')) void endLive();
               }}
               disabled={isSaving}
-              className="shrink-0 rounded-full border border-[#e3c2c2] bg-white px-3.5 py-1.5 text-[13px] font-medium text-[#c47a7a] transition-colors hover:bg-[#f9eded] disabled:opacity-50 sm:px-4"
+              className="shrink-0 rounded-full border border-[#e5c5a3] bg-white px-3.5 py-1.5 text-[13px] font-medium text-[#b56a3a] transition-colors hover:bg-[#f7efe2] disabled:opacity-50 sm:px-4"
             >
               {isSaving ? '处理中…' : '结束直播'}
             </button>
@@ -215,21 +215,21 @@ function LiveRoom({ config }: { config: TrainingConfig }) {
         {/* 左：视频面板卡片 */}
         <div className="min-w-0">
           <div className="lg:sticky lg:top-[72px]">
-            <div className="overflow-hidden rounded-2xl border border-[#e8e0dc] bg-white shadow-[0_2px_16px_rgba(44,36,34,0.06)]">
+            <div className="overflow-hidden rounded-2xl border border-[#e6dfd2] bg-white shadow-[0_2px_16px_rgba(44,36,34,0.06)]">
               {/* 面板头 */}
-              <div className="flex items-center justify-between border-b border-[#f0eae6] px-4 py-2.5">
+              <div className="flex items-center justify-between border-b border-[#f1ebdf] px-4 py-2.5">
                 <h3 className="flex items-center gap-2 font-serif text-[14px] font-bold tracking-[0.5px] text-[#2c2422]">
-                  <MonitorIcon className="h-4 w-4 text-[#c4838a]" />
+                  <MonitorIcon className="h-4 w-4 text-[#a66a3a]" />
                   直播监视器
                 </h3>
                 <div className="flex items-center gap-2">
                   {isLive && (
-                    <span className="inline-flex items-center gap-1.5 rounded-full bg-[#f9eded] px-2 py-0.5 text-[11px] font-bold text-[#c47a7a]">
-                      <span className="live-dot h-1.5 w-1.5 rounded-full bg-[#c47a7a]" />
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-[#f7efe2] px-2 py-0.5 text-[11px] font-bold text-[#b56a3a]">
+                      <span className="live-dot h-1.5 w-1.5 rounded-full bg-[#b56a3a]" />
                       模拟直播中
                     </span>
                   )}
-                  <span className="font-mono text-xs tabular-nums text-[#a69791]">
+                  <span className="font-mono text-xs tabular-nums text-[#9c8e80]">
                     REC {fmtClock(elapsedSec)}
                   </span>
                 </div>
@@ -251,8 +251,8 @@ function LiveRoom({ config }: { config: TrainingConfig }) {
                   <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#1c1817]/80 p-6 backdrop-blur-sm">
                     {cameraError ? (
                       <div className="max-w-md text-center">
-                        <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#f2e0e2]">
-                          <MonitorIcon className="h-6 w-6 text-[#c4838a]" />
+                        <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#f3e7d5]">
+                          <MonitorIcon className="h-6 w-6 text-[#a66a3a]" />
                         </div>
                         <h2 className="font-serif text-lg font-bold text-white">
                           摄像头 / 麦克风不可用
@@ -261,7 +261,7 @@ function LiveRoom({ config }: { config: TrainingConfig }) {
                         <div className="mt-4 flex flex-wrap justify-center gap-3">
                           <button
                             onClick={() => window.location.reload()}
-                            className="rounded-full bg-[#c4838a] px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#b8727a]"
+                            className="rounded-full bg-[#a66a3a] px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#8f5630]"
                           >
                             重新连接
                           </button>
@@ -275,7 +275,7 @@ function LiveRoom({ config }: { config: TrainingConfig }) {
                       </div>
                     ) : (
                       <div className="w-full max-w-lg text-center">
-                        <span className="spinner mx-auto mb-3 block h-8 w-8 rounded-full border-2 border-[#e8c4c8] border-t-transparent" />
+                        <span className="spinner mx-auto mb-3 block h-8 w-8 rounded-full border-2 border-[#e3c4a3] border-t-transparent" />
                         <h2 className="font-serif text-lg font-bold text-white">
                           正在连接摄像头与麦克风…
                         </h2>
@@ -292,7 +292,7 @@ function LiveRoom({ config }: { config: TrainingConfig }) {
                   <div className="absolute inset-0 flex items-center justify-center bg-[#1c1817]/55 backdrop-blur-sm">
                     <span
                       key={countdown}
-                      className="count-pulse font-mono text-[72px] font-black leading-none text-[#e8c4c8] sm:text-[116px]"
+                      className="count-pulse font-mono text-[72px] font-black leading-none text-[#e3c4a3] sm:text-[116px]"
                     >
                       {countdown > 0 ? countdown : 'GO'}
                     </span>
@@ -302,7 +302,7 @@ function LiveRoom({ config }: { config: TrainingConfig }) {
                 {/* LIVE 状态灯（画面左上角） */}
                 {(isLive || isSaving) && (
                   <div className="absolute left-4 top-4 flex items-center gap-2 rounded-full bg-black/35 px-3 py-1 backdrop-blur-sm">
-                    <span className="live-dot inline-flex h-2 w-2 rounded-full bg-[#e88a8a]" />
+                    <span className="live-dot inline-flex h-2 w-2 rounded-full bg-[#d18a4e]" />
                     <span className="text-xs font-bold text-white/90">模拟直播中</span>
                   </div>
                 )}
@@ -313,8 +313,8 @@ function LiveRoom({ config }: { config: TrainingConfig }) {
                     key={`${latestReminder.atSec}-${latestReminder.message}`}
                     className="subtitle-enter pointer-events-none absolute inset-x-0 bottom-3 flex justify-center px-4 sm:bottom-5 sm:px-6"
                   >
-                    <div className="flex max-w-full items-center gap-2 rounded-full bg-white/92 px-4 py-2 text-xs font-medium text-[#9d5f68] shadow-[0_6px_24px_rgba(0,0,0,0.25)] backdrop-blur-md sm:px-5 sm:py-2.5 sm:text-sm">
-                      <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#c4838a]" />
+                    <div className="flex max-w-full items-center gap-2 rounded-full bg-white/92 px-4 py-2 text-xs font-medium text-[#7a5230] shadow-[0_6px_24px_rgba(0,0,0,0.25)] backdrop-blur-md sm:px-5 sm:py-2.5 sm:text-sm">
+                      <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#a66a3a]" />
                       <span className="truncate">{latestReminder.message}</span>
                     </div>
                   </div>
@@ -322,21 +322,21 @@ function LiveRoom({ config }: { config: TrainingConfig }) {
               </div>
 
               {/* 状态栏：状态点 + 端侧视觉 + 当前环节 + 音量 */}
-              <div className="flex items-center gap-3 border-t border-[#f0eae6] bg-white px-4 py-2.5 text-xs">
+              <div className="flex items-center gap-3 border-t border-[#f1ebdf] bg-white px-4 py-2.5 text-xs">
                 <span className="flex items-center gap-1.5 font-medium text-[#6e625e]">
                   <span className={`h-1.5 w-1.5 rounded-full ${statusInfo.dot}`} />
                   {statusInfo.text}
                 </span>
                 <FaceStatusChips faceState={faceState} />
-                <span className="hidden text-[#a69791] sm:inline">·</span>
-                <span className="hidden min-w-0 truncate text-[#a69791] sm:inline">
+                <span className="hidden text-[#9c8e80] sm:inline">·</span>
+                <span className="hidden min-w-0 truncate text-[#9c8e80] sm:inline">
                   当前环节：{isLive || isSaving || isEnded ? currentLabel || '识别中' : '待开播'}
                 </span>
-                <span className="ml-auto flex items-center gap-2 text-[#a69791]">
+                <span className="ml-auto flex items-center gap-2 text-[#9c8e80]">
                   <span className="hidden sm:inline">音量</span>
-                  <span className="block h-1 w-14 overflow-hidden rounded-full bg-[#f0eae7]">
+                  <span className="block h-1 w-14 overflow-hidden rounded-full bg-[#f1ebe0]">
                     <span
-                      className="block h-full rounded-full bg-[#c4838a] transition-[width] duration-100"
+                      className="block h-full rounded-full bg-[#a66a3a] transition-[width] duration-100"
                       style={{ width: `${Math.min(audioState.level * 160, 100)}%` }}
                     />
                   </span>
@@ -346,7 +346,7 @@ function LiveRoom({ config }: { config: TrainingConfig }) {
 
             {/* 设备就绪面板（不遮挡画面，作为下方信息卡） */}
             {isDevice && cameraReady && (
-              <div className="mt-3 rounded-2xl border border-[#e8e0dc] bg-white p-4 shadow-[0_2px_16px_rgba(44,36,34,0.06)] sm:p-5">
+              <div className="mt-3 rounded-2xl border border-[#e6dfd2] bg-white p-4 shadow-[0_2px_16px_rgba(44,36,34,0.06)] sm:p-5">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                   <div className="min-w-0 flex-1">
                     <h2 className="font-serif text-[15px] font-bold text-[#2c2422]">
@@ -355,7 +355,7 @@ function LiveRoom({ config }: { config: TrainingConfig }) {
                     <div className="mt-1.5 grid grid-cols-1 gap-x-6 gap-y-0.5 text-[12.5px] text-[#6e625e] sm:grid-cols-2">
                       {cfgSummary.map(([k, v]) => (
                         <p key={k} className="truncate">
-                          <span className="text-[#a69791]">{k}：</span>
+                          <span className="text-[#9c8e80]">{k}：</span>
                           {v}
                         </p>
                       ))}
@@ -363,7 +363,7 @@ function LiveRoom({ config }: { config: TrainingConfig }) {
                   </div>
                   <button
                     onClick={beginCountdown}
-                    className="pulse-ring w-full shrink-0 rounded-full bg-[#c4838a] px-8 py-3 text-[15px] font-medium tracking-[0.5px] text-white shadow-[0_6px_20px_rgba(196,131,138,0.35)] transition-all hover:-translate-y-0.5 hover:bg-[#b8727a] hover:shadow-[0_8px_28px_rgba(196,131,138,0.45)] sm:w-auto"
+                    className="pulse-ring w-full shrink-0 rounded-full bg-[#a66a3a] px-8 py-3 text-[15px] font-medium tracking-[0.5px] text-white shadow-[0_6px_20px_rgba(166,106,58,0.35)] transition-all hover:-translate-y-0.5 hover:bg-[#8f5630] hover:shadow-[0_8px_28px_rgba(166,106,58,0.45)] sm:w-auto"
                   >
                     开始直播
                   </button>
@@ -389,8 +389,8 @@ function LiveRoom({ config }: { config: TrainingConfig }) {
                 onClick={() => setActiveTab(k)}
                 className={`flex-1 rounded-full py-2 text-[13px] font-medium transition-colors ${
                   activeTab === k
-                    ? 'bg-[#c4838a] text-white shadow-[0_2px_10px_rgba(196,131,138,0.3)]'
-                    : 'border border-[#e8e0dc] bg-white text-[#6e625e]'
+                    ? 'bg-[#a66a3a] text-white shadow-[0_2px_10px_rgba(166,106,58,0.3)]'
+                    : 'border border-[#e6dfd2] bg-white text-[#6e625e]'
                 }`}
               >
                 {label}
@@ -404,7 +404,7 @@ function LiveRoom({ config }: { config: TrainingConfig }) {
               activeTab === 'metrics' ? 'flex' : 'hidden lg:flex'
             }`}
           >
-            <div className="rounded-2xl border border-[#e8e0dc] bg-white p-4 shadow-[0_2px_16px_rgba(44,36,34,0.06)]">
+            <div className="rounded-2xl border border-[#e6dfd2] bg-white p-4 shadow-[0_2px_16px_rgba(44,36,34,0.06)]">
               <div className="flex items-center gap-4">
                 <ScoreRing value={metricsSnap.overall} />
                 <div className="min-w-0 flex-1">
@@ -426,7 +426,7 @@ function LiveRoom({ config }: { config: TrainingConfig }) {
 
             {/* 维度分析（仅直播中显示实时条） */}
             {(isLive || isEnded || isSaving) && (
-              <div className="rounded-2xl border border-[#e8e0dc] bg-white shadow-[0_2px_16px_rgba(44,36,34,0.06)]">
+              <div className="rounded-2xl border border-[#e6dfd2] bg-white shadow-[0_2px_16px_rgba(44,36,34,0.06)]">
                 <CardHead icon={GaugeIcon} title="维度分析" />
                 <div className="p-4 pt-3">
                   <MetricsStrip snap={metricsSnap} />
@@ -437,7 +437,7 @@ function LiveRoom({ config }: { config: TrainingConfig }) {
 
           {/* AI 提醒流 */}
           <div
-            className={`flex min-h-[240px] flex-col rounded-2xl border border-[#e8e0dc] bg-white shadow-[0_2px_16px_rgba(44,36,34,0.06)] lg:min-h-[220px] ${
+            className={`flex min-h-[240px] flex-col rounded-2xl border border-[#e6dfd2] bg-white shadow-[0_2px_16px_rgba(44,36,34,0.06)] lg:min-h-[220px] ${
               activeTab === 'coach' ? '' : 'hidden lg:flex'
             }`}
           >
@@ -445,7 +445,7 @@ function LiveRoom({ config }: { config: TrainingConfig }) {
               icon={SparklesIcon}
               title="AI 教练提醒"
               badge={
-                <span className="rounded-full bg-[#f2e0e2] px-2 py-0.5 text-[11px] font-medium text-[#9d5f68]">
+                <span className="rounded-full bg-[#f3e7d5] px-2 py-0.5 text-[11px] font-medium text-[#7a5230]">
                   {reminders.length} 条
                 </span>
               }
@@ -457,7 +457,7 @@ function LiveRoom({ config }: { config: TrainingConfig }) {
 
           {/* 流程陪练 */}
           <div
-            className={`flex min-h-[240px] flex-col rounded-2xl border border-[#e8e0dc] bg-white shadow-[0_2px_16px_rgba(44,36,34,0.06)] lg:min-h-[260px] ${
+            className={`flex min-h-[240px] flex-col rounded-2xl border border-[#e6dfd2] bg-white shadow-[0_2px_16px_rgba(44,36,34,0.06)] lg:min-h-[260px] ${
               activeTab === 'stage' ? '' : 'hidden lg:flex'
             }`}
           >
@@ -474,8 +474,8 @@ function LiveRoom({ config }: { config: TrainingConfig }) {
               <StagePanel stages={stages} currentLabel={currentLabel} />
               {/* 话术关键词提示（培养自主表达，不做全文提词器） */}
               {config.script && (
-                <div className="mt-3 rounded-xl border border-[#e8e0dc] bg-[#faf6f4] p-3">
-                  <p className="flex items-center gap-1.5 text-[11px] font-bold text-[#9d5f68]">
+                <div className="mt-3 rounded-xl border border-[#e6dfd2] bg-[#faf7f1] p-3">
+                  <p className="flex items-center gap-1.5 text-[11px] font-bold text-[#7a5230]">
                     <ListIcon className="h-3.5 w-3.5" />
                     话术关键词（忘词时参考，AI 只给关键词）
                   </p>
@@ -492,18 +492,18 @@ function LiveRoom({ config }: { config: TrainingConfig }) {
 
       {/* 结束保存遮罩 */}
       {isSaving && (
-        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#f8f4f1]/90 backdrop-blur-md">
-          <span className="spinner mb-4 block h-10 w-10 rounded-full border-[3px] border-[#c4838a] border-t-transparent" />
+        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#faf6ef]/90 backdrop-blur-md">
+          <span className="spinner mb-4 block h-10 w-10 rounded-full border-[3px] border-[#a66a3a] border-t-transparent" />
           <h2 className="font-serif text-lg font-bold text-[#2c2422]">正在生成本场直播复盘…</h2>
           <p className="mt-2 text-sm text-[#6e625e]">
             AI 教练正在汇总本场表现数据并撰写训练总结
           </p>
           {saveError && (
-            <div className="mt-4 rounded-full bg-[#f9eded] px-4 py-2 text-sm text-[#c47a7a]">
+            <div className="mt-4 rounded-full bg-[#f7efe2] px-4 py-2 text-sm text-[#b56a3a]">
               {saveError}
               <button
                 onClick={() => void endLive()}
-                className="ml-3 rounded-full bg-[#c4838a] px-3 py-1 text-xs font-medium text-white"
+                className="ml-3 rounded-full bg-[#a66a3a] px-3 py-1 text-xs font-medium text-white"
               >
                 重试
               </button>
@@ -535,14 +535,14 @@ export default function LivePage() {
   if (missing) {
     return (
       <div className="flex min-h-dvh flex-col items-center justify-center gap-4 p-6 text-center">
-        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#f2e0e2]">
-          <MonitorIcon className="h-7 w-7 text-[#c4838a]" />
+        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#f3e7d5]">
+          <MonitorIcon className="h-7 w-7 text-[#a66a3a]" />
         </div>
         <h1 className="font-serif text-xl font-bold text-[#2c2422]">还没有直播训练配置</h1>
         <p className="text-sm text-[#6e625e]">请先完成直播准备，再进入直播间</p>
         <a
           href="/setup"
-          className="rounded-full bg-[#c4838a] px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-[#b8727a]"
+          className="rounded-full bg-[#a66a3a] px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-[#8f5630]"
         >
           去直播准备
         </a>
@@ -553,7 +553,7 @@ export default function LivePage() {
   if (!config) {
     return (
       <div className="flex min-h-dvh items-center justify-center">
-        <span className="spinner h-8 w-8 rounded-full border-2 border-[#c4838a] border-t-transparent" />
+        <span className="spinner h-8 w-8 rounded-full border-2 border-[#a66a3a] border-t-transparent" />
       </div>
     );
   }

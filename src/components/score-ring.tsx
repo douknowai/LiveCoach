@@ -7,14 +7,14 @@ export function ScoreRing({ value, size = 120 }: { value: number; size?: number 
   const C = 2 * Math.PI * r;
   const offset = C * (1 - Math.max(0, Math.min(100, value)) / 100);
   const color =
-    value >= 85 ? '#8ab89a' : value >= 70 ? '#c4838a' : value >= 55 ? '#d4a574' : '#c4bab3';
+    value >= 85 ? '#8ab89a' : value >= 70 ? '#a66a3a' : value >= 55 ? '#d4a574' : '#c0b4a4';
   return (
     <div
       className="relative inline-flex items-center justify-center"
       style={{ width: size, height: size }}
     >
       <svg width={size} height={size} className="-rotate-90">
-        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="#f0eae6" strokeWidth={stroke} />
+        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="#f1ebdf" strokeWidth={stroke} />
         <circle
           cx={size / 2}
           cy={size / 2}
@@ -35,7 +35,7 @@ export function ScoreRing({ value, size = 120 }: { value: number; size?: number 
         >
           {Math.round(value)}
         </span>
-        <span className="text-[10px] text-[#a69791]">综合评分</span>
+        <span className="text-[10px] text-[#9c8e80]">综合评分</span>
       </div>
     </div>
   );
