@@ -68,6 +68,8 @@ interface SavePayload {
   script?: string;
   durationSec?: number;
   metrics?: Partial<Record<MetricKey, number>>;
+  /** 前端引擎整场时间加权综合分（口径与实时仪表盘一致，优先于服务端简单平均） */
+  overall?: number;
   metricSamples?: MetricSample[];
   reminders?: Reminder[];
   stageTimeline?: LiveStage[];
@@ -107,9 +109,12 @@ export async function POST(request: NextRequest) {
       return acc;
     }, {});
 
-    const overallScore = Math.round(
-      METRIC_KEYS.reduce((a, k) => a + metrics[k], 0) / METRIC_KEYS.length
-    );
+    // 优先采用前端引擎的整场时间加权综合分（结束前突击无法拉高总分），
+    // 缺失或非法时退回简单平均兜底
+    const overallScore =
+      typeof body.overall === 'number' && body.overall >= 0 && body.overall <= 100
+        ? Math.round(body.overall)
+        : Math.round(METRIC_KEYS.reduce((a, k) => a + metrics[k], 0) / METRIC_KEYS.length);
 
     // ── 写入 Supabase ──
     const db = getSupabaseClient();

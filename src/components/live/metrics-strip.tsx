@@ -15,14 +15,29 @@ const BAR_COLORS: Record<MetricKey, string> = {
   charisma: 'linear-gradient(90deg, #ecdec2, #d4b48c)',
 };
 
-/** 直播实时指标：8 维细条 */
+/** 直播实时指标：8 维细条（未观测维度显示「—」且不计入综合分） */
 export function MetricsStrip({ snap }: { snap: MetricsSnapshot }) {
   return (
     <div className="space-y-0">
+      {snap.coverage < 1 && (
+        <p className="pb-2 text-[11px] leading-relaxed text-[#a69791]">
+          AI 观测中：「—」为本场尚未观测到的维度，暂不计入综合评分
+        </p>
+      )}
       {METRIC_KEYS.map((k, i) => {
+        const observed = snap.observed?.[k] ?? true;
         const v = Math.round(snap.metrics[k]);
         const color =
-          v >= 85 ? '#8ab89a' : v >= 70 ? '#a66a3a' : v >= 55 ? '#d4a574' : '#c0b4a4';
+        const color =
+          !observed
+            ? '#c0b4a4'
+            : v >= 85
+              ? '#8ab89a'
+              : v >= 70
+                ? '#a66a3a'
+                : v >= 55
+                  ? '#d4a574'
+                  : '#c0b4a4';
         return (
           <div
             key={k}
@@ -37,14 +52,18 @@ export function MetricsStrip({ snap }: { snap: MetricsSnapshot }) {
               <span
                 className="block h-full rounded-full"
                 style={{
-                  width: `${v}%`,
+                  width: observed ? `${v}%` : '0%',
                   background: BAR_COLORS[k],
+                  opacity: observed ? 1 : 0.25,
                   transition: 'width 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
                 }}
               />
             </span>
-            <span className="w-8 shrink-0 text-right text-[13px] font-bold tabular-nums" style={{ color }}>
-              {v}
+            <span
+              className="w-8 shrink-0 text-right text-[13px] font-bold tabular-nums"
+              style={{ color }}
+            >
+              {observed ? v : '—'}
             </span>
           </div>
         );

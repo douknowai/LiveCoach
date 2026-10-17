@@ -18,7 +18,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AudioEngine } from '@/lib/audio-engine';
 import { FaceEngine } from '@/lib/face-engine';
-import { MetricsEngine, type MetricsSnapshot } from '@/lib/metrics-engine';
+import { MetricsEngine, createInitialSnapshot, type MetricsSnapshot } from '@/lib/metrics-engine';
 import { ReminderEngine } from '@/lib/reminder-engine';
 import { WavRecorder } from '@/lib/wav-recorder';
 import { parseOutline, DEFAULT_OUTLINE_STAGES, loadStoredProfile, METRIC_TO_REMINDER_TYPES, type StoredProfile } from '@/lib/session-config';
@@ -106,13 +106,7 @@ export function useLiveSession(config: TrainingConfig) {
   const [welcomeText, setWelcomeText] = useState('');
   const [latestReminder, setLatestReminder] = useState<Reminder | null>(null);
   const [coachNotes, setCoachNotes] = useState<CoachNote[]>([]);
-  const [metricsSnap, setMetricsSnap] = useState<MetricsSnapshot>(() => ({
-    metrics: {
-      cameraPresence: 75, expression: 75, posture: 75, language: 75,
-      pacing: 75, content: 75, interaction: 75, charisma: 75,
-    },
-    overall: 75,
-  }));
+  const [metricsSnap, setMetricsSnap] = useState<MetricsSnapshot>(() => createInitialSnapshot());
   const [audioState, setAudioState] = useState<AudioState>({
     avgVolume: 0, level: 0, silenceSec: 0, speakingRatio: 0,
   });
@@ -514,7 +508,6 @@ export function useLiveSession(config: TrainingConfig) {
       if (!data.ok || !data.speech) return;
       const s = data.speech;
       setLatestSpeech(s);
-      metricsRef.current.applySpeech(s);
       if (s.transcript) lastTranscriptRef.current = s.transcript;
       const rec: SpeechSegmentRecord = {
         atSec: elapsedRef.current,
@@ -523,6 +516,13 @@ export function useLiveSession(config: TrainingConfig) {
         interaction: s.interaction,
       };
       if (s.transcript) speechSegmentsRef.current.push(rec);
+      // ASR 静音降级 / LLM 分析失败：兜底数据（normal 语速、零口头禅等）不参与评分，
+      // 防止「不说话反而涨分」；仅在转写有效时保留记录供复盘
+      if (data.error) {
+        setCounts((c) => ({ ...c, speech: c.speech + 1 }));
+        return;
+      }
+      metricsRef.current.applySpeech(s);
       setCounts((c) => ({ ...c, speech: c.speech + 1 }));
       if (data.stage) applyStageJudgement(data.stage);
       for (const r of data.reminders ?? []) {
@@ -536,10 +536,10 @@ export function useLiveSession(config: TrainingConfig) {
     }
   }, [buildContext, pushReminder, applyStageJudgement]);
 
-  // ── 本地音频规则（每秒检查） ──
-  const runLocalAudioRules = useCallback(() => {
+  // ── 本地音频规则（每秒检查，返回最新音频状态供评分引擎使用） ──
+  const runLocalAudioRules = useCallback((): AudioState | null => {
     const audio = audioEngineRef.current;
-    if (!audio) return;
+    if (!audio) return null;
     const st = audio.getState();
     setAudioState({ ...st });
 
@@ -572,6 +572,7 @@ export function useLiveSession(config: TrainingConfig) {
         source: 'local',
       });
     }
+    return st;
   }, [pushReminder]);
 
   // ── 分析循环（开播与保存失败回退共用） ──
@@ -590,8 +591,9 @@ export function useLiveSession(config: TrainingConfig) {
       elapsedRef.current += 1;
       const sec = elapsedRef.current;
       setElapsedSec(sec);
-      runLocalAudioRules();
-      metricsRef.current.tick(sec);
+      const st = runLocalAudioRules();
+      // 内容分只随真实讲话增长（挂机不涨），并逐秒累积时间积分供终评
+      metricsRef.current.tick(sec, st?.speakingRatio ?? 0);
       if (sec % 15 === 0) {
         metricsRef.current.recordSample(sec);
         setMetricsSnap(metricsRef.current.snapshot());
@@ -671,7 +673,8 @@ export function useLiveSession(config: TrainingConfig) {
     phaseSync('saving');
 
     const c = configRef.current;
-    const snap = metricsRef.current.snapshot();
+    // 终评：整场每秒时间积分平均（结尾突击表现无法拉高总分）
+    const snap = metricsRef.current.finalSnapshot();
     const durationSec = elapsedRef.current;
     const remindersAll = reminderEngineRef.current.all();
     faceEngineRef.current?.disarm();
@@ -691,6 +694,7 @@ export function useLiveSession(config: TrainingConfig) {
           script: c.script,
           durationSec,
           metrics: snap.metrics,
+          overall: snap.overall,
           metricSamples: metricsRef.current.samples,
           reminders: remindersAll,
           stageTimeline: stagesRef.current,

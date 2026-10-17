@@ -120,7 +120,8 @@ export interface VisionResult {
 export interface SpeechResult {
   transcript: string;
   speechRate: 'slow' | 'normal' | 'fast';
-  fillerWords: string[];
+  /** 口头禅及出现次数（评分按密度计算，非简单有无） */
+  fillerWords: Array<{ word: string; count: number }>;
   interaction: 'none' | 'some' | 'good';
   onTopic: boolean;
   energy: 'low' | 'normal' | 'high';

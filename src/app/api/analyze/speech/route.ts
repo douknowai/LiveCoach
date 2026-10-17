@@ -138,12 +138,19 @@ export async function POST(request: NextRequest) {
     const num = (val: unknown, def: number): number =>
       typeof val === 'number' && val >= 0 && val <= 100 ? Math.round(val) : def;
 
+    // 保留口头禅出现次数（密度评分与复盘展示都需要，不能退化为纯字符串）
     const fillerWords = (s.fillerWords ?? [])
-      .map((f): string => {
-        if (typeof f === 'string') return f;
-        return typeof f.word === 'string' ? f.word : '';
+      .map((f): { word: string; count: number } | null => {
+        if (typeof f === 'string') return f ? { word: f, count: 1 } : null;
+        if (typeof f?.word === 'string' && f.word) {
+          return {
+            word: f.word,
+            count: typeof f.count === 'number' && f.count > 0 ? Math.round(f.count) : 1,
+          };
+        }
+        return null;
       })
-      .filter((w) => w.length > 0)
+      .filter((f): f is { word: string; count: number } => f !== null)
       .slice(0, 6);
 
     const speech: SpeechResult = {
