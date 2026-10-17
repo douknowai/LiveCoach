@@ -40,7 +40,7 @@ LiveCoach 让学生打开摄像头即可完成一场接近真实工作的模拟�
 ### 安装与配置
 
 ```bash
-git clone https://github.com/leoliaowenbo-tech/LiveCoach.git
+git clone https://github.com/douknowai/LiveCoach.git
 cd LiveCoach
 pnpm install
 ```
