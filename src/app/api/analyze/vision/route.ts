@@ -17,7 +17,6 @@ import type {
   AnalyzeContext,
   VisionAnalysisResponse,
   VisionResult,
-  StageJudgement,
 } from '@/lib/types';
 
 export const maxDuration = 60;
@@ -27,7 +26,6 @@ interface LLMVisionOutput {
     scores?: Partial<VisionResult['scores']>;
   };
   reminders?: Array<{ type?: string; message?: string; priority?: number }>;
-  stage?: Partial<StageJudgement>;
 }
 
 export async function POST(request: NextRequest) {
@@ -132,19 +130,10 @@ export async function POST(request: NextRequest) {
       .filter((r): r is NonNullable<typeof r> => r !== null)
       .slice(0, 2);
 
-    const stage: StageJudgement | undefined = parsed.stage
-      ? {
-          current:
-            typeof parsed.stage.current === 'string'
-              ? parsed.stage.current.slice(0, 30)
-              : '',
-          matchedIndex:
-            typeof parsed.stage.matchedIndex === 'number' ? parsed.stage.matchedIndex : -1,
-          offTopic: Boolean(parsed.stage.offTopic),
-        }
-      : undefined;
-
-    const res: VisionAnalysisResponse = { ok: true, vision, reminders, stage };
+    // 视觉链路不判定直播环节：仅凭画面与元信息无法证明环节，判定会退化为
+    // 复述 ctx.currentStage（matchedIndex 恒为当前环节）造成流程自锁；
+    // 环节推进由语音链路（有 ASR 转写内容信号）唯一驱动。
+    const res: VisionAnalysisResponse = { ok: true, vision, reminders };
     return NextResponse.json(res);
   } catch (err) {
     console.error('[vision] 分析失败:', err);

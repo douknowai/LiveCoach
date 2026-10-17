@@ -190,12 +190,11 @@ export interface AnalyzeContext {
   lastTranscript: string;
 }
 
-/** 视觉分析接口响应 */
+/** 视觉分析接口响应（不含环节判定：视觉链路无内容信号，环节推进由语音链路唯一驱动） */
 export interface VisionAnalysisResponse {
   ok: boolean;
   vision?: VisionResult;
   reminders?: Array<Omit<Reminder, 'atSec' | 'source'>>;
-  stage?: StageJudgement;
   error?: string;
 }
 

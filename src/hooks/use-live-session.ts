@@ -361,8 +361,9 @@ export function useLiveSession(config: TrainingConfig) {
   const applyStageJudgement = useCallback(
     (judged: { current: string; matchedIndex: number; offTopic: boolean }) => {
       const stagesNow = stagesRef.current;
-      if (judged.matchedIndex >= 0 && judged.matchedIndex < stagesNow.length) {
-        const idx = judged.matchedIndex;
+
+      /** 推进/回退到指定环节：标记遗漏、生成环节小结、更新高亮与当前环节 */
+      const advanceTo = (idx: number) => {
         const prev = lastMatchedRef.current;
         if (idx !== prev) {
           // 标记中间遗漏环节
@@ -412,9 +413,29 @@ export function useLiveSession(config: TrainingConfig) {
         }
         currentLabelRef.current = stagesNow[idx].name;
         setCurrentLabel(stagesNow[idx].name);
-      } else if (judged.current && judged.current !== currentLabelRef.current) {
-        currentLabelRef.current = judged.current.slice(0, 24);
-        setCurrentLabel(currentLabelRef.current);
+      };
+
+      /** 环节名规范化（去空白/装饰词），用于名称模糊匹配兜底 */
+      const norm = (s: string) => s.replace(/[\s环节：:，,。、·|-]+/g, '');
+
+      if (judged.matchedIndex >= 0 && judged.matchedIndex < stagesNow.length) {
+        advanceTo(judged.matchedIndex);
+      } else if (judged.current) {
+        // LLM 未给出 matchedIndex 时按环节名模糊匹配兜底；
+        // 仅允许不回退（模糊信号易抖动，避免误匹配导致环节来回跳）
+        const label = norm(judged.current);
+        const hit = label
+          ? stagesNow.findIndex((st) => {
+              const nm = norm(st.name);
+              return nm.length > 0 && (nm === label || nm.includes(label) || label.includes(nm));
+            })
+          : -1;
+        if (hit >= 0 && hit >= lastMatchedRef.current) {
+          advanceTo(hit);
+        } else if (judged.current !== currentLabelRef.current) {
+          currentLabelRef.current = judged.current.slice(0, 24);
+          setCurrentLabel(currentLabelRef.current);
+        }
       }
     },
     [pushReminder]
@@ -455,7 +476,6 @@ export function useLiveSession(config: TrainingConfig) {
         visionChecksRef.current.push(rec);
         setAiLevel(v.level === 'ok' ? 'ok' : v.level);
         setCounts((c) => ({ ...c, vision: c.vision + 1 }));
-        if (data.stage) applyStageJudgement(data.stage);
         // AI 建议提醒 → 节流入列
         for (const r of data.reminders ?? []) {
           pushReminder({
@@ -472,7 +492,7 @@ export function useLiveSession(config: TrainingConfig) {
         setAiStatus('idle');
       }
     },
-    [buildContext, captureFrame, pushReminder, applyStageJudgement]
+    [buildContext, captureFrame, pushReminder]
   );
 
   // ── 语音检查 ──

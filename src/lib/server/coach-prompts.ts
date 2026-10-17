@@ -108,17 +108,12 @@ export function buildVisionSystemPrompt(coachStyle?: CoachStyle | null): string 
 5. 考虑 recentReminders：最近已提醒过的问题不要重复提醒；
 6. 考虑 audioState：如果 silenceSec 较大（主播正在停顿），可结合视觉判断是否需要提醒进入下一环节。
 
-【流程判断】
-根据直播进行时间、已介绍的环节（currentStage）和提纲（outline），判断当前最可能处于哪个环节：
-- current: 当前环节名称（尽量使用提纲中的原文）
-- matchedIndex: 匹配提纲第几项（从 0 开始，-1 表示无法匹配）
-- offTopic: 是否明显长时间偏离主题（布尔）
+【重要】你只能看到画面与上下文元信息，无法判断直播讲到哪个环节，禁止进行环节判定（环节推进由语音链路负责）。
 
 【输出格式】只输出 JSON，不要输出任何其他文字：
 {
   "vision": { "smile": "good|neutral|poor", "expression": "natural|stiff|flat", "distance": "ok|too_close|too_far", "headTilt": "ok|slight|obvious", "headDown": false, "lookingAtCamera": "yes|sometimes|no", "bodyPosture": "upright|slouching|leaning", "framePosition": "center|off_center", "movement": "stable|swaying", "energy": "high|normal|low", "scores": { "cameraPresence": 0-100, "expression": 0-100, "posture": 0-100 }, "level": "ok|warn|alert" },
-  "reminders": [{ "type": "${REMINDER_TYPES}", "message": "简洁提醒文本", "priority": 1|2|3 }],
-  "stage": { "current": "环节名", "matchedIndex": -1, "offTopic": false }
+  "reminders": [{ "type": "${REMINDER_TYPES}", "message": "简洁提醒文本", "priority": 1|2|3 }]
 }`;
 }
 
@@ -145,7 +140,6 @@ export function buildVisionUserPrompt(input: VisionPromptInput): string {
   parts.push(stages);
 
   parts.push(`【当前直播时间】第 ${Math.floor(ctx.elapsedSec / 60)} 分 ${ctx.elapsedSec % 60} 秒`);
-  parts.push(`【AI 判定的当前环节】${ctx.currentStage || '未知'}`);
   parts.push(`【是否本场的首次视觉检查】${isFirstCheck ? '是（此时不生成提醒，只做基线观察）' : '否'}`);
 
   if (ctx.recentReminders.length > 0) {
@@ -209,8 +203,11 @@ export function buildSpeechSystemPrompt(coachStyle?: CoachStyle | null): string 
 5. recentReminders 中已提醒过的问题不要重复；
 6. 转写文本可能为空或很短（学生没说话），此时 speechRate=slow, energy=low，并可给 pause 提醒。
 
-【流程判断】
-根据转写内容判断当前环节：current（环节名，尽量用提纲原文）、matchedIndex（0 起，-1 未匹配）、offTopic（是否明显偏题）。
+【流程判断】（你是环节推进的唯一依据，必须基于转写内容判断，禁止只是复述「AI 判定的当前环节」）
+- 将本段转写内容与直播提纲逐项对照：内容已属于提纲第 i 项时，matchedIndex 返回 i，即使它比「AI 判定的当前环节」更靠后也要如实返回；
+- 判断学生已完成第 i 项并开始讲第 i+1 项时，matchedIndex 返回 i+1；
+- 转写内容太短、只是寒暄或无法判断时，matchedIndex 返回 -1，current 沿用「AI 判定的当前环节」；
+- current 尽量使用提纲原文；offTopic 表示内容明显偏离直播主题（布尔）。
 
 【输出格式】只输出 JSON：
 {
