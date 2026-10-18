@@ -376,7 +376,7 @@ export function buildReviewUserPrompt(input: ReviewPromptInput): string {
     parts.push(
       `【语音片段（部分转写）】\n${speechSegments
         .slice(0, 30)
-        .map((s) => `- 第 ${s.atSec}s [语速:${s.speechRate} 互动:${s.interaction}] ${s.text.slice(0, 60)}`)
+        .map((s) => `- 第 ${s.atSec}s [语速:${s.speechRate ?? 'normal'} 互动:${s.interaction ?? 'some'}] ${(s.text ?? '').slice(0, 60)}`)
         .join('\n')}`
     );
   }
