@@ -27,6 +27,7 @@ import type {
   GrowthProfile,
 } from '@/lib/types';
 import { METRIC_KEYS } from '@/lib/types';
+import { WEIGHTS } from '@/lib/metrics-engine';
 
 export const maxDuration = 300;
 
@@ -175,9 +176,10 @@ async function generateReview(
       radar,
     };
 
-    // 用 AI 调整后的 radar 校准总分
+    // 用 AI 调整后的 radar 校准总分（与引擎 overall 同一套维度权重，口径一致）
+    const wsum = METRIC_KEYS.reduce((a, k) => a + WEIGHTS[k], 0);
     const adjustedScore = Math.round(
-      METRIC_KEYS.reduce((a, k) => a + radar[k], 0) / METRIC_KEYS.length
+      METRIC_KEYS.reduce((a, k) => a + radar[k] * WEIGHTS[k], 0) / wsum
     );
     const { error: updateErr } = await db
       .from('training_sessions')

@@ -20,8 +20,8 @@ const INIT_SCORE = 75;
 /** EMA 锚定系数：视觉 6s/次较密，语音 22s/次较稀（响应需更快） */
 const EMA_ALPHA_VISION = 0.35;
 const EMA_ALPHA_SPEECH = 0.5;
-/** overall 维度权重：内容 1.3 > 镜头/语言 1.2 > 表情/互动/感染力 1.1 > 其余 1 */
-const WEIGHTS: Record<MetricKey, number> = {
+/** overall 维度权重：内容 1.3 > 镜头/语言 1.2 > 表情/互动/感染力 1.1 > 其余 1（复盘校准分复用同一权重） */
+export const WEIGHTS: Record<MetricKey, number> = {
   cameraPresence: 1.2,
   expression: 1.1,
   posture: 1,
